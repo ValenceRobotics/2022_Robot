@@ -1,15 +1,16 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Drivetrain extends SubsystemBase  {
     private final WPI_TalonSRX m_leftFront = new WPI_TalonSRX(Constants.Drivetrain.kLeftFront);
-    private final WPI_TalonSRX m_leftRear = new WPI_TalonSRX(Constants.Drivetrain.kLeftRear);
+    private final WPI_VictorSPX m_leftRear = new WPI_VictorSPX(Constants.Drivetrain.kLeftRear);
     private final WPI_TalonSRX m_rightFront = new WPI_TalonSRX(Constants.Drivetrain.kRightFront);
-    private final WPI_TalonSRX m_rightRear = new WPI_TalonSRX(Constants.Drivetrain.kRightRear);
+    private final WPI_VictorSPX m_rightRear = new WPI_VictorSPX(Constants.Drivetrain.kRightRear);
 
     public Drivetrain() {
         // reset all motors
@@ -36,8 +37,8 @@ public class Drivetrain extends SubsystemBase  {
     }
 
     public void tankDrive(double left, double right) {
-        m_leftFront.set(left);
-        m_rightFront.set(right);
+        m_leftFront.set(-left);
+        m_rightFront.set(-right);
     }
 
     public void tankDriveVolts(double left, double right) {
