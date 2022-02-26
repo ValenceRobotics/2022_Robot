@@ -20,10 +20,10 @@ import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
  */
 public final class Constants {
     public static final class Drivetrain {
-        public static final int kLeftFront = 0;
-        public static final int kLeftRear = 2;
-        public static final int kRightFront = 1;
-        public static final int kRightRear = 3;
+        public static final int kLeftFront = 1;
+        public static final int kLeftRear = 3;
+        public static final int kRightFront = 0;
+        public static final int kRightRear = 2;
     }
 
     public static final class PathingConstants {
@@ -51,12 +51,14 @@ public final class Constants {
     }
 
     public static final class OI {
-        public static final int kXboxController = 0;
+        public static final int kXboxController = 2;
         public static final int kJoystickLeft = 1;
-        public static final int kJoystickRight = 2;
+        public static final int kJoystickRight = 0;
 
         public static final int kArmUpButton = 0;
         public static final int kArmDownButton = 1;
+
+        
         public static final int kIntakeInButton = 2;
         public static final int kIntakeOutButton = 3;
     }

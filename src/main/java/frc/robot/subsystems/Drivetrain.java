@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
@@ -19,18 +20,15 @@ public class Drivetrain extends SubsystemBase  {
         m_rightFront.configFactoryDefault();
         m_rightRear.configFactoryDefault();
 
-        m_leftRear.follow(m_leftFront);
-        m_rightRear.follow(m_rightFront);
-
         // set follow for rear motors
         m_leftRear.follow(m_leftFront);
         m_rightRear.follow(m_rightFront);
 
         // invert the right side motors
         m_rightFront.setInverted(true);
-        m_rightRear.setInverted(true);
+        m_rightRear.setInverted(InvertType.FollowMaster);
         m_leftFront.setInverted(false);
-        m_leftRear.setInverted(false);
+        m_leftRear.setInverted(InvertType.FollowMaster);
 
         m_leftFront.setSensorPhase(true);
         m_rightFront.setSensorPhase(true);
