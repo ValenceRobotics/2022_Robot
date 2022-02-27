@@ -7,6 +7,7 @@ import com.ctre.phoenix.sensors.WPI_Pigeon2;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -43,7 +44,7 @@ public class Drivetrain extends SubsystemBase  {
         m_leftFront.setSensorPhase(true);
         m_rightFront.setSensorPhase(true);
 
-        m_leftFront.setSelectedSensorPosition(0);
+        resetEncoders();
 
         m_imu.configFactoryDefault();
 
@@ -66,8 +67,22 @@ public class Drivetrain extends SubsystemBase  {
         m_field.setRobotPose(getPose());
     }
 
+    private void resetEncoders() {
+        m_leftFront.setSelectedSensorPosition(0);
+        m_rightFront.setSelectedSensorPosition(0);
+    }
+
     public Pose2d getPose() {
         return m_odometry.getPoseMeters();
+    }
+
+    public void setPose(Pose2d pose) {
+        resetEncoders();
+        m_odometry.resetPosition(pose, m_imu.getRotation2d());
+    }
+
+    public DifferentialDriveWheelSpeeds getWheelSpeeds() {
+        return new DifferentialDriveWheelSpeeds(quadratureUnitsToMeters(m_leftFront.getSelectedSensorVelocity()), m_rightFront.getSelectedSensorVelocity());
     }
 
     private double quadratureUnitsToMeters(double quadratureCounts) {
