@@ -42,17 +42,21 @@ public class RobotContainer {
   private final Arm m_arm = new Arm();
   private final Intake m_intake = new Intake();
 
-  // private final XboxController m_xboxController = new XboxController(Constants.OI.kXboxController);
-  private final Joystick m_joystickLeft = new Joystick(Constants.OI.kJoystickLeft);
-  private final Joystick m_joystickRight = new Joystick(Constants.OI.kJoystickRight);
+  private final XboxController m_xboxController = new XboxController(Constants.OI.kXboxController);
+  // private final Joystick m_joystickLeft = new Joystick(Constants.OI.kJoystickLeft);
+  // private final Joystick m_joystickRight = new Joystick(Constants.OI.kJoystickRight);
 
-  // private final Command m_tankDrive = new RunCommand(() -> m_drivetrain.tankDrive(m_xboxController.getLeftY(), m_xboxController.getRightY()), m_drivetrain);
-  private final Command m_tankDrive = new RunCommand(() -> m_drivetrain.tankDrive(m_joystickLeft.getY(), m_joystickRight.getY()), m_drivetrain);
+  private final Command m_tankDrive = new RunCommand(() -> m_drivetrain.tankDrive(m_xboxController.getLeftY(), m_xboxController.getRightY()), m_drivetrain);
+  // private final Command m_tankDrive = new RunCommand(() -> m_drivetrain.tankDrive(m_joystickLeft.getY(), m_joystickRight.getY()), m_drivetrain);
 
-  private final Button m_armUp = new JoystickButton(m_joystickRight, Constants.OI.kArmUpButton);
-  private final Button m_armDown = new JoystickButton(m_joystickRight, Constants.OI.kArmDownButton);
-  private final Button m_intakeIn = new JoystickButton(m_joystickRight, Constants.OI.kIntakeInButton);
-  private final Button m_intakeOut = new JoystickButton(m_joystickRight, Constants.OI.kIntakeOutButton);
+  // private final Button m_armUp = new JoystickButton(m_joystickRight, Constants.OI.kArmUpButton);
+  // private final Button m_armDown = new JoystickButton(m_joystickRight, Constants.OI.kArmDownButton);
+  // private final Button m_intakeIn = new JoystickButton(m_joystickRight, Constants.OI.kIntakeInButton);
+  // private final Button m_intakeOut = new JoystickButton(m_joystickRight, Constants.OI.kIntakeOutButton);
+  private final Button m_armUp = new JoystickButton(m_xboxController, Constants.OI.kArmUpButton);
+  private final Button m_armDown = new JoystickButton(m_xboxController, Constants.OI.kArmDownButton);
+  private final Button m_intakeIn = new JoystickButton(m_xboxController, Constants.OI.kIntakeInButton);
+  private final Button m_intakeOut = new JoystickButton(m_xboxController, Constants.OI.kIntakeOutButton);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {

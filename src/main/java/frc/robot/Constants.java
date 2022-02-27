@@ -4,7 +4,10 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.math.util.Units;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
@@ -24,6 +27,15 @@ public final class Constants {
         public static final int kLeftRear = 3;
         public static final int kRightFront = 0;
         public static final int kRightRear = 2;
+
+        public static final int kPigeonIMU = 4;
+        public static final int kCountsPerRev = 4096;
+        public static final double kSensorGearRatio = 1;
+        public static final double kGearRatio = 1; // TODO: Update this
+        public static final double kWheelRadiusMeters = Units.inchesToMeters(3); // TODO: Double check this
+        public static final int k100msPerSecond = 10;
+        public static final Pose2d kStartPosition = new Pose2d(0, 0, new Rotation2d());
+        public static final int kLeftFront = 1;
     }
 
     public static final class PathingConstants {
@@ -55,11 +67,10 @@ public final class Constants {
         public static final int kJoystickLeft = 1;
         public static final int kJoystickRight = 0;
 
-        public static final int kArmUpButton = 0;
-        public static final int kArmDownButton = 1;
+        public static final int kArmUpButton = 1;
+        public static final int kArmDownButton = 2;
 
-        
-        public static final int kIntakeInButton = 2;
-        public static final int kIntakeOutButton = 3;
+        public static final int kIntakeInButton = 3;
+        public static final int kIntakeOutButton = 4;
     }
 }
