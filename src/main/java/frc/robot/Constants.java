@@ -31,11 +31,10 @@ public final class Constants {
         public static final int kPigeonIMU = 4;
         public static final int kCountsPerRev = 4096;
         public static final double kSensorGearRatio = 1;
-        public static final double kGearRatio = 1; // TODO: Update this
-        public static final double kWheelRadiusMeters = Units.inchesToMeters(3); // TODO: Double check this
+        public static final double kGearRatio = 10.71;
+        public static final double kWheelRadiusMeters = Units.inchesToMeters(3);
         public static final int k100msPerSecond = 10;
         public static final Pose2d kStartPosition = new Pose2d(0, 0, new Rotation2d());
-        public static final int kLeftFront = 1;
     }
 
     public static final class PathingConstants {
