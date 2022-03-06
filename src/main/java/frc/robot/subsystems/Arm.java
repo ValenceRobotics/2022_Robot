@@ -39,5 +39,6 @@ public class Arm extends SubsystemBase {
     @Override
     public void periodic() {
         SmartDashboard.putNumber("Arm Position", getArmPosition());
+        System.out.println("Arm position " + getArmPosition());
     }
 }
