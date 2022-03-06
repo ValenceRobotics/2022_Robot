@@ -19,6 +19,7 @@ import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstrai
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.PIDCommand;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.Button;
@@ -48,6 +49,21 @@ public class RobotContainer {
   private final Command m_arcadeDrive = new RunCommand(() -> m_drivetrain.arcadeDrive(-m_xboxController.getLeftY(), m_xboxController.getRightX()), m_drivetrain);
   // private final Command m_tankDrive = new RunCommand(() -> m_drivetrain.tankDrive(m_joystickLeft.getY(), m_joystickRight.getY()), m_drivetrain);
 
+  private final Command m_armUpCommand = new PIDCommand(
+    Constants.Arm.kArmPID, 
+    m_arm::getArmPosition, 
+    Constants.Arm.kArmTopPositionEncoderReading, 
+    m_arm::driveArm,
+    m_arm
+  );
+  private final Command m_armDownCommand = new PIDCommand(
+    Constants.Arm.kArmPID, 
+    m_arm::getArmPosition, 
+    Constants.Arm.kArmBottomPositionEncoderReading, 
+    m_arm::driveArm,
+    m_arm
+  );
+
   // private final Button m_armUp = new JoystickButton(m_joystickRight, Constants.OI.kArmUpButton);
   // private final Button m_armDown = new JoystickButton(m_joystickRight, Constants.OI.kArmDownButton);
   // private final Button m_intakeIn = new JoystickButton(m_joystickRight, Constants.OI.kIntakeInButton);
@@ -63,6 +79,7 @@ public class RobotContainer {
     configureButtonBindings();
 
     m_drivetrain.setDefaultCommand(m_arcadeDrive);
+    m_arm.setDefaultCommand(m_armDownCommand);
   }
 
   /**
@@ -72,8 +89,8 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    m_armUp.whileHeld(() -> m_arm.driveArm(Constants.Arm.kArmSpeed)).whenReleased(() -> m_arm.driveArm(0));
-    m_armDown.whileHeld(() -> m_arm.driveArm(-Constants.Arm.kArmSpeed)).whenReleased(() -> m_arm.driveArm(0));
+    m_armUp.whenPressed(m_armUpCommand);
+    m_armDown.whenPressed(m_armDownCommand);
 
     m_intakeIn.whileHeld(() -> m_intake.driveIntake(Constants.Intake.kIntakeSpeed)).whenReleased(() -> m_intake.driveIntake(0));
     m_intakeOut.whileHeld(() -> m_intake.driveIntake(-Constants.Intake.kIntakeSpeed)).whenReleased(() -> m_intake.driveIntake(0));

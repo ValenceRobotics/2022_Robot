@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
@@ -54,8 +55,12 @@ public final class Constants {
 
     public static final class Arm {
         public static final int kArmMotor = 10;
-
-        public static final double kArmSpeed = 0.1;
+        public static final double kArmMaxSpeed = 0; // ADJUST THIS
+        public static final double kArmBottomPositionEncoderReading = 0; // ADJUST THIS
+        public static final double kArmTopPositionEncoderReading = 0; // ADJUST THIS
+        public static final int kArmEncoder = 0; // ADJUST THIS
+        public static final double kArmEncoderDistance = 0; // ADJUST THIS
+        public static final PIDController kArmPID = new PIDController(0, 0, 0); // ADJUST THESE
     }
 
     public static final class Intake {
