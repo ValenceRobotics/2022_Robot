@@ -61,6 +61,9 @@ public final class Constants {
         public static final int kArmEncoder = 0; // ADJUST THIS
         public static final double kArmEncoderDistance = 0; // ADJUST THIS
         public static final PIDController kArmPID = new PIDController(0, 0, 0); // ADJUST THESE
+        public static final double kArmUp = 0; // ADJUST THIS
+        public static final double kArmDown = 0; // ADJUST THIS
+        public static final double kArmHold = 0; // ADJUST THIS
     }
 
     public static final class Intake {

@@ -49,20 +49,23 @@ public class RobotContainer {
   private final Command m_arcadeDrive = new RunCommand(() -> m_drivetrain.arcadeDrive(-m_xboxController.getLeftY(), m_xboxController.getRightX()), m_drivetrain);
   // private final Command m_tankDrive = new RunCommand(() -> m_drivetrain.tankDrive(m_joystickLeft.getY(), m_joystickRight.getY()), m_drivetrain);
 
-  private final Command m_armUpCommand = new PIDCommand(
-    Constants.Arm.kArmPID, 
-    m_arm::getArmPosition, 
-    Constants.Arm.kArmTopPositionEncoderReading, 
-    m_arm::driveArm,
-    m_arm
-  );
-  private final Command m_armDownCommand = new PIDCommand(
-    Constants.Arm.kArmPID, 
-    m_arm::getArmPosition, 
-    Constants.Arm.kArmBottomPositionEncoderReading, 
-    m_arm::driveArm,
-    m_arm
-  );
+  // private final Command m_armUpCommand = new PIDCommand(
+  //   Constants.Arm.kArmPID, 
+  //   m_arm::getArmPosition, 
+  //   Constants.Arm.kArmTopPositionEncoderReading, 
+  //   m_arm::driveArm,
+  //   m_arm
+  // );
+  // private final Command m_armDownCommand = new PIDCommand(
+  //   Constants.Arm.kArmPID, 
+  //   m_arm::getArmPosition, 
+  //   Constants.Arm.kArmBottomPositionEncoderReading, 
+  //   m_arm::driveArm,
+  //   m_arm
+  // );
+  private final Command m_armUpCommand = new RunCommand(() -> m_arm.driveArm(Constants.Arm.kArmUp), m_arm); 
+  private final Command m_armDownCommand = new RunCommand(() -> m_arm.driveArm(Constants.Arm.kArmDown), m_arm);
+  private final Command m_armHoldCommand = new RunCommand(() -> m_arm.driveArm(Constants.Arm.kArmHold), m_arm);
 
   // private final Button m_armUp = new JoystickButton(m_joystickRight, Constants.OI.kArmUpButton);
   // private final Button m_armDown = new JoystickButton(m_joystickRight, Constants.OI.kArmDownButton);
@@ -91,8 +94,10 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    m_armUp.whenPressed(m_armUpCommand);
-    m_armDown.whenPressed(m_armDownCommand);
+    // m_armUp.whenPressed(m_armUpCommand);
+    // m_armDown.whenPressed(m_armDownCommand);
+    m_armUp.whenPressed(m_armUpCommand).whenReleased(m_armHoldCommand);
+    m_armDown.whenPressed(m_armDownCommand).whenReleased(m_armHoldCommand);
 
     m_intakeIn.whileHeld(() -> m_intake.driveIntake(Constants.Intake.kIntakeSpeed)).whenReleased(() -> m_intake.driveIntake(0));
     m_intakeOut.whileHeld(() -> m_intake.driveIntake(-Constants.Intake.kIntakeSpeed)).whenReleased(() -> m_intake.driveIntake(0));
