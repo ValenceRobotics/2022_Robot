@@ -8,6 +8,8 @@ import com.ctre.phoenix.sensors.WPI_Pigeon2;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -18,6 +20,9 @@ public class Drivetrain extends SubsystemBase  {
     private final WPI_VictorSPX m_leftRear = new WPI_VictorSPX(Constants.Drivetrain.kLeftRear);
     private final WPI_TalonSRX m_rightFront = new WPI_TalonSRX(Constants.Drivetrain.kRightFront);
     private final WPI_VictorSPX m_rightRear = new WPI_VictorSPX(Constants.Drivetrain.kRightRear);
+
+    private final Encoder leftEnc;
+    private final Encoder rightEnc;
 
     private final WPI_Pigeon2 m_imu = new WPI_Pigeon2(4);
 
@@ -30,6 +35,11 @@ public class Drivetrain extends SubsystemBase  {
         m_leftRear.configFactoryDefault();
         m_rightFront.configFactoryDefault();
         m_rightRear.configFactoryDefault();
+
+        //encoders
+        leftEnc = new Encoder(Constants.Drivetrain.kLeftEnc[0], Constants.Drivetrain.kLeftEnc[1], true, EncodingType.k4X);
+        rightEnc = new Encoder(Constants.Drivetrain.kRightEnc[0], Constants.Drivetrain.kRightEnc[1], true, EncodingType.k4X);
+        leftEnc.setReverseDirection(false);
 
         // set follow for rear motors
         m_leftRear.follow(m_leftFront);
@@ -69,13 +79,13 @@ public class Drivetrain extends SubsystemBase  {
 
     @Override
     public void periodic() {
-        m_odometry.update(m_imu.getRotation2d(), quadratureUnitsToMeters(m_leftFront.getSelectedSensorPosition()), quadratureUnitsToMeters(m_rightFront.getSelectedSensorPosition()));
-        m_field.setRobotPose(getPose());
+        //m_odometry.update(m_imu.getRotation2d(), quadratureUnitsToMeters(m_leftFront.getSelectedSensorPosition()), quadratureUnitsToMeters(m_rightFront.getSelectedSensorPosition()));
+        //m_field.setRobotPose(getPose());
     }
 
     private void resetEncoders() {
-        m_leftFront.setSelectedSensorPosition(0);
-        m_rightFront.setSelectedSensorPosition(0);
+        leftEnc.reset();
+        rightEnc.reset();
     }
 
     public Pose2d getPose() {

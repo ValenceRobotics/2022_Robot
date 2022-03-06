@@ -10,8 +10,8 @@ public class Arm extends SubsystemBase {
     private final CANSparkMax m_armMotor = new CANSparkMax(Constants.Arm.kArmMotor, MotorType.kBrushless);
 
     public Arm() {
-        m_armMotor.restoreFactoryDefaults();
-
+        // m_armMotor.configFactoryDefault();
+        m_armMotor.setInverted(false);
         // Set this accordingly depending the lights on the speed controller
         // m_armMotor.setInverted(true);
     }
