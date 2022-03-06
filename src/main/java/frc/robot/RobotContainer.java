@@ -84,7 +84,7 @@ public class RobotContainer {
     configureButtonBindings();
 
     m_drivetrain.setDefaultCommand(m_arcadeDrive);
-    m_arm.setDefaultCommand(m_armDownCommand);
+    m_arm.setDefaultCommand(m_armHoldCommand);
   }
 
   /**
