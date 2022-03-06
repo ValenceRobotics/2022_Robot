@@ -28,7 +28,7 @@ public class Arm extends SubsystemBase {
     }
 
     public void driveArm(double speed) {
-        m_armMotor.set(MathUtil.clamp(speed, 0, Constants.Arm.kArmMaxSpeed));
+        m_armMotor.set(MathUtil.clamp(speed, -Constants.Arm.kArmMaxSpeed, Constants.Arm.kArmMaxSpeed));
     }
 
     @Override
