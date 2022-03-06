@@ -52,13 +52,19 @@ public class Drivetrain extends SubsystemBase  {
     }
 
     public void tankDrive(double left, double right) {
-        m_leftFront.set(-left);
-        m_rightFront.set(-right);
+        m_leftFront.set(left);
+        m_rightFront.set(right);
     }
 
     public void tankDriveVolts(double left, double right) {
         m_leftFront.setVoltage(left);
         m_rightFront.setVoltage(right);
+    }
+
+    public void arcadeDrive(double throttle, double turn) {
+        m_leftFront.set(throttle + turn);
+        turn *= 0.8;
+        m_rightFront.set(throttle - turn);
     }
 
     @Override

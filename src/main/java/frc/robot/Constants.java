@@ -50,15 +50,15 @@ public final class Constants {
     }
 
     public static final class Arm {
-        public static final int kArmMotor = 4;
+        public static final int kArmMotor = 10;
 
-        public static final double kArmSpeed = 0.3;
+        public static final double kArmSpeed = 0.1;
     }
 
     public static final class Intake {
         public static final int kIntakeMotor = 5;
 
-        public static final double kIntakeSpeed = 0.3;
+        public static final double kIntakeSpeed = 0.1;
     }
 
     public static final class OI {

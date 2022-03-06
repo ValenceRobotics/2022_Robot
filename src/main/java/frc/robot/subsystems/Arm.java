@@ -1,15 +1,16 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Arm extends SubsystemBase {
-    private final WPI_VictorSPX m_armMotor = new WPI_VictorSPX(Constants.Arm.kArmMotor);
+    private final CANSparkMax m_armMotor = new CANSparkMax(Constants.Arm.kArmMotor, MotorType.kBrushless);
 
     public Arm() {
-        m_armMotor.configFactoryDefault();
+        m_armMotor.restoreFactoryDefaults();
 
         // Set this accordingly depending the lights on the speed controller
         // m_armMotor.setInverted(true);

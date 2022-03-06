@@ -44,7 +44,8 @@ public class RobotContainer {
   // private final Joystick m_joystickLeft = new Joystick(Constants.OI.kJoystickLeft);
   // private final Joystick m_joystickRight = new Joystick(Constants.OI.kJoystickRight);
 
-  private final Command m_tankDrive = new RunCommand(() -> m_drivetrain.tankDrive(m_xboxController.getLeftY(), m_xboxController.getRightY()), m_drivetrain);
+  private final Command m_tankDrive = new RunCommand(() -> m_drivetrain.tankDrive(-m_xboxController.getLeftY(), -m_xboxController.getRightY()), m_drivetrain);
+  private final Command m_arcadeDrive = new RunCommand(() -> m_drivetrain.arcadeDrive(-m_xboxController.getLeftY(), m_xboxController.getRightX()), m_drivetrain);
   // private final Command m_tankDrive = new RunCommand(() -> m_drivetrain.tankDrive(m_joystickLeft.getY(), m_joystickRight.getY()), m_drivetrain);
 
   // private final Button m_armUp = new JoystickButton(m_joystickRight, Constants.OI.kArmUpButton);
@@ -61,7 +62,7 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
 
-    m_drivetrain.setDefaultCommand(m_tankDrive);
+    m_drivetrain.setDefaultCommand(m_arcadeDrive);
   }
 
   /**
@@ -71,11 +72,11 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    m_armUp.whileHeld(new RunCommand(() -> m_arm.driveArm(Constants.Arm.kArmSpeed), m_arm));
-    m_armDown.whileHeld(new RunCommand(() -> m_arm.driveArm(-Constants.Arm.kArmSpeed), m_arm));
+    m_armUp.whileHeld(() -> m_arm.driveArm(Constants.Arm.kArmSpeed)).whenReleased(() -> m_arm.driveArm(0));
+    m_armDown.whileHeld(() -> m_arm.driveArm(-Constants.Arm.kArmSpeed)).whenReleased(() -> m_arm.driveArm(0));
 
-    m_intakeIn.whileHeld(new RunCommand(() -> m_intake.driveIntake(Constants.Intake.kIntakeSpeed), m_intake));
-    m_intakeOut.whileHeld(new RunCommand(() -> m_intake.driveIntake(-Constants.Intake.kIntakeSpeed), m_intake));
+    m_intakeIn.whileHeld(() -> m_intake.driveIntake(Constants.Intake.kIntakeSpeed)).whenReleased(() -> m_intake.driveIntake(0));
+    m_intakeOut.whileHeld(() -> m_intake.driveIntake(-Constants.Intake.kIntakeSpeed)).whenReleased(() -> m_intake.driveIntake(0));
   }
 
   /**
