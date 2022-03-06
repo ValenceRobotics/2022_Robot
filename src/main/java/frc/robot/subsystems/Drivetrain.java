@@ -73,14 +73,13 @@ public class Drivetrain extends SubsystemBase  {
 
     @Override
     public void periodic() {
-        m_odometry.update(m_imu.getRotation2d(), quadratureUnitsToMeters(m_leftFront.getSelectedSensorPosition()), quadratureUnitsToMeters(m_rightFront.getSelectedSensorPosition()));
-        m_field.setRobotPose(getPose());
-        System.out.println("left: " + leftEnc.get() + "; right: " + rightEnc.get());
+        //m_odometry.update(m_imu.getRotation2d(), quadratureUnitsToMeters(m_leftFront.getSelectedSensorPosition()), quadratureUnitsToMeters(m_rightFront.getSelectedSensorPosition()));
+        //m_field.setRobotPose(getPose());
     }
 
     private void resetEncoders() {
-        leftEnc.reset();;
-        rightEnc.reset();;
+        leftEnc.reset();
+        rightEnc.reset();
     }
 
     public Pose2d getPose() {

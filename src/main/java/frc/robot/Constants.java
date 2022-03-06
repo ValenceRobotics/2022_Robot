@@ -31,7 +31,7 @@ public final class Constants {
         public static final int[] kLeftEnc = {7,6};
         public static final int[] kRightEnc = {9,8};
 
-        public static final int kPigeonIMU = 4;
+        public static final int kPigeonIMU = 15;
         public static final int kCountsPerRev = 4096;
         public static final double kSensorGearRatio = 1;
         public static final double kGearRatio = 10.71;
@@ -53,19 +53,19 @@ public final class Constants {
     }
 
     public static final class Arm {
-        public static final int kArmMotor = 4;
+        public static final int kArmMotor = 10;
 
         public static final double kArmSpeed = 0.3;
     }
 
     public static final class Intake {
-        public static final int kIntakeMotor = 5;
+        public static final int kIntakeMotor = 4;
 
         public static final double kIntakeSpeed = 0.3;
     }
 
     public static final class OI {
-        public static final int kXboxController = 2;
+        public static final int kXboxController = 0;
         public static final int kJoystickLeft = 1;
         public static final int kJoystickRight = 0;
 
@@ -75,4 +75,4 @@ public final class Constants {
         public static final int kIntakeInButton = 3;
         public static final int kIntakeOutButton = 4;
     }
-}
+} 
