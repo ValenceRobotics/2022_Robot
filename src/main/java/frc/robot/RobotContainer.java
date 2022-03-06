@@ -72,6 +72,8 @@ public class RobotContainer {
   private final Button m_armDown = new JoystickButton(m_xboxController, Constants.OI.kArmDownButton);
   private final Button m_intakeIn = new JoystickButton(m_xboxController, Constants.OI.kIntakeInButton);
   private final Button m_intakeOut = new JoystickButton(m_xboxController, Constants.OI.kIntakeOutButton);
+  private final Button m_tankDriveButton = new JoystickButton(m_xboxController, Constants.OI.kTankDriveButton);
+  private final Button m_arcadeDriveButton = new JoystickButton(m_xboxController, Constants.OI.kArcadeDriveButton);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -94,6 +96,9 @@ public class RobotContainer {
 
     m_intakeIn.whileHeld(() -> m_intake.driveIntake(Constants.Intake.kIntakeSpeed)).whenReleased(() -> m_intake.driveIntake(0));
     m_intakeOut.whileHeld(() -> m_intake.driveIntake(-Constants.Intake.kIntakeSpeed)).whenReleased(() -> m_intake.driveIntake(0));
+
+    m_tankDriveButton.whenPressed(m_tankDrive);
+    m_arcadeDriveButton.whenPressed(m_arcadeDrive);
   }
 
   /**

@@ -79,5 +79,8 @@ public final class Constants {
 
         public static final int kIntakeInButton = 3;
         public static final int kIntakeOutButton = 4;
+
+        public static final int kTankDriveButton = 5;
+        public static final int kArcadeDriveButton = 6;
     }
 } 
