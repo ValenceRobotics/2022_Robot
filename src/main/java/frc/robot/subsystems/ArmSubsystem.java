@@ -12,6 +12,7 @@ import frc.robot.Constants;
 public class ArmSubsystem extends SubsystemBase {
     private final CANSparkMax m_armMotor = new CANSparkMax(Constants.Arm.kArmMotor, MotorType.kBrushless);
     private final RelativeEncoder m_armEncoder = m_armMotor.getEncoder();
+    public double holdPosition;
 
     public ArmSubsystem() {
         // m_armMotor.configFactoryDefault();
@@ -33,6 +34,7 @@ public class ArmSubsystem extends SubsystemBase {
 
     public void driveArm(double speed) {
         m_armMotor.set(MathUtil.clamp(speed, -Constants.Arm.kArmMaxSpeed, Constants.Arm.kArmMaxSpeed));
+        holdPosition = getArmPosition();
     }
 
     @Override

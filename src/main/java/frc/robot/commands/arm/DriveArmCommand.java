@@ -1,0 +1,59 @@
+// Copyright (c) FIRST and other WPILib contributors.
+// Open Source Software; you can modify and/or share it under the terms of
+// the WPILib BSD license file in the root directory of this project.
+
+package frc.robot.commands.arm;
+
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.PIDCommand;
+import edu.wpi.first.wpilibj2.command.ScheduleCommand;
+import frc.robot.Constants;
+import frc.robot.subsystems.ArmSubsystem;
+
+public class DriveArmCommand extends CommandBase {
+  /** Creates a new DriveArmCommand. */
+  private final ArmSubsystem armSubsystem; 
+  private final XboxController controller;
+
+  private final ScheduleCommand armHoldCommandPID;
+
+  public DriveArmCommand(XboxController controller, ArmSubsystem armSubsystem) {
+    // Use addRequirements() here to declare subsystem dependencies.
+    this.armSubsystem = armSubsystem;
+    this.controller = controller;
+    this.armHoldCommandPID = new ScheduleCommand(new ArmHoldPIDCommand(armSubsystem));
+
+    addRequirements(armSubsystem);
+  }
+
+  // Called when the command is initially scheduled.
+  @Override
+  public void initialize() {}
+
+  // Called every time the scheduler runs while the command is scheduled.
+  @Override
+  public void execute() {
+    if (controller.getLeftTriggerAxis() >= 0.5) {
+          armSubsystem.driveArm(Constants.Arm.kArmUp);
+      } else if (controller.getRightTriggerAxis() >= 0.5) {
+          armSubsystem.driveArm(Constants.Arm.kArmDown);
+      } else {
+          armHoldCommandPID.schedule();
+      }
+  }
+
+  // Called once the command ends or is interrupted.
+  @Override
+  public void end(boolean interrupted) {
+    armSubsystem.driveArm(0);
+  }
+
+  // Returns true when the command should end.
+  @Override
+  public boolean isFinished() {
+    return false;
+  }
+}
