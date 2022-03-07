@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-public class Drivetrain extends SubsystemBase  {
+public class DrivetrainSubsystem extends SubsystemBase  {
     private final WPI_TalonSRX m_leftFront = new WPI_TalonSRX(Constants.Drivetrain.kLeftFront);
     private final WPI_VictorSPX m_leftRear = new WPI_VictorSPX(Constants.Drivetrain.kLeftRear);
     private final WPI_TalonSRX m_rightFront = new WPI_TalonSRX(Constants.Drivetrain.kRightFront);
@@ -29,7 +29,7 @@ public class Drivetrain extends SubsystemBase  {
     private final DifferentialDriveOdometry m_odometry = new DifferentialDriveOdometry(m_imu.getRotation2d(), Constants.Drivetrain.kStartPosition);
     private final Field2d m_field = new Field2d();
 
-    public Drivetrain() {
+    public DrivetrainSubsystem() {
         // reset all motors
         m_leftFront.configFactoryDefault();
         m_leftRear.configFactoryDefault();

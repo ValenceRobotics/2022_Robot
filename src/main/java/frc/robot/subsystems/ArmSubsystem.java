@@ -9,11 +9,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-public class Arm extends SubsystemBase {
+public class ArmSubsystem extends SubsystemBase {
     private final CANSparkMax m_armMotor = new CANSparkMax(Constants.Arm.kArmMotor, MotorType.kBrushless);
     private final RelativeEncoder m_armEncoder = m_armMotor.getEncoder();
 
-    public Arm() {
+    public ArmSubsystem() {
         // m_armMotor.configFactoryDefault();
         m_armMotor.setInverted(false);
         // Set this accordingly depending the lights on the speed controller

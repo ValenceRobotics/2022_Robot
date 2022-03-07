@@ -19,15 +19,14 @@ import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstrai
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.PIDCommand;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
-import edu.wpi.first.wpilibj2.command.RunCommand;
-import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-// import edu.wpi.first.wpilibj.Joystick;
-import frc.robot.subsystems.Arm;
-import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.Intake;
+import frc.robot.commands.ArmCommands;
+import frc.robot.commands.DrivetrainCommands;
+import frc.robot.commands.IntakeCommands;
+import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.subsystems.DrivetrainSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -37,56 +36,19 @@ import frc.robot.subsystems.Intake;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  public static final Drivetrain m_drivetrain = new Drivetrain();
-  public static final Arm m_arm = new Arm();
-  public static final Intake m_intake = new Intake();
+  public static final DrivetrainSubsystem m_drivetrain = new DrivetrainSubsystem();
+  public static final ArmSubsystem m_arm = new ArmSubsystem();
+  public static final IntakeSubsystem m_intake = new IntakeSubsystem();
 
   public static final XboxController m_xboxController = new XboxController(Constants.OI.kXboxController);
-  // private final Joystick m_joystickLeft = new Joystick(Constants.OI.kJoystickLeft);
-  // private final Joystick m_joystickRight = new Joystick(Constants.OI.kJoystickRight);
-  private final Command m_tankDrive = new RunCommand(() -> m_drivetrain.tankDrive(-m_xboxController.getLeftY(), -m_xboxController.getRightY()), m_drivetrain);
-  private final Command m_arcadeDrive = new RunCommand(() -> m_drivetrain.arcadeDrive(-m_xboxController.getLeftY(), m_xboxController.getRightX()), m_drivetrain);
-  // private final Command m_tankDrive = new RunCommand(() -> m_drivetrain.tankDrive(m_joystickLeft.getY(), m_joystickRight.getY()), m_drivetrain);
-
-  // private final Command m_armUpCommand = new PIDCommand(
-  //   Constants.Arm.kArmPID, 
-  //   m_arm::getArmPosition, 
-  //   Constants.Arm.kArmTopPositionEncoderReading, 
-  //   m_arm::driveArm,
-  //   m_arm
-  // );
-  // private final Command m_armDownCommand = new PIDCommand(
-  //   Constants.Arm.kArmPID, 
-  //   m_arm::getArmPosition, 
-  //   Constants.Arm.kArmBottomPositionEncoderReading, 
-  //   m_arm::driveArm,
-  //   m_arm
-  // );
-  private final Command m_armUpCommand = new RunCommand(() -> m_arm.driveArm(Constants.Arm.kArmUp), m_arm); 
-  private final Command m_armDownCommand = new RunCommand(() -> m_arm.driveArm(Constants.Arm.kArmDown), m_arm);
-  private final Command m_armHoldCommand = new RunCommand(() -> m_arm.driveArm(Constants.Arm.kArmHold), m_arm);
-
-  // private final Button m_armUp = new JoystickButton(m_joystickRight, Constants.OI.kArmUpButton);
-  // private final Button m_armDown = new JoystickButton(m_joystickRight, Constants.OI.kArmDownButton);
-  // private final Button m_intakeIn = new JoystickButton(m_joystickRight, Constants.OI.kIntakeInButton);
-  // private final Button m_intakeOut = new JoystickButton(m_joystickRight, Constants.OI.kIntakeOutButton);
-
-  //private final Button m_armUp = new JoystickButton(m_xboxController, Constants.OI.kArmUpButton);
-  //private final Button m_armDown = new JoystickButton(m_xboxController, Constants.OI.kArmDownButton);
-  private final Button m_intakeIn = new JoystickButton(m_xboxController, Constants.OI.kIntakeInButton);
-  private final Button m_intakeOut = new JoystickButton(m_xboxController, Constants.OI.kIntakeOutButton);
-  //private final Button m_tankDriveButton = new JoystickButton(m_xboxController, Constants.OI.kTankDriveButton);
-  //private final Button m_arcadeDriveButton = new JoystickButton(m_xboxController, Constants.OI.kArcadeDriveButton);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
 
-    m_drivetrain.setDefaultCommand(m_arcadeDrive);
-    m_arm.setDefaultCommand(m_armHoldCommand);
-
-    
+    m_drivetrain.setDefaultCommand(DrivetrainCommands.tankDriveXboxController(m_drivetrain, m_xboxController));
+    m_arm.setDefaultCommand(ArmCommands.armTriggerOperation(m_arm, m_xboxController));
   }
 
   /**
@@ -96,16 +58,26 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    // m_armUp.whenPressed(m_armUpCommand);
-    // m_armDown.whenPressed(m_armDownCommand);
-    //m_armUp.whenPressed(m_armUpCommand).whenReleased(m_armHoldCommand);
-    //m_armDown.whenPressed(m_armDownCommand).whenReleased(m_armHoldCommand);
+    (new JoystickButton(m_xboxController, Constants.OI.kIntakeInButton))
+      .whileHeld(IntakeCommands.intakeIn(m_intake))
+      .whenReleased(IntakeCommands.intakeStop(m_intake));
 
-    m_intakeIn.whileHeld(() -> m_intake.driveIntake(Constants.Intake.kIntakeSpeed)).whenReleased(() -> m_intake.driveIntake(0));
-    m_intakeOut.whileHeld(() -> m_intake.driveIntake(-Constants.Intake.kIntakeSpeed)).whenReleased(() -> m_intake.driveIntake(0));
+    (new JoystickButton(m_xboxController, Constants.OI.kIntakeOutButton))
+      .whileHeld(IntakeCommands.intakeOut(m_intake))
+      .whenReleased(IntakeCommands.intakeStop(m_intake));
 
-    //m_tankDriveButton.whenPressed(m_tankDrive);
-    //m_arcadeDriveButton.whenPressed(m_arcadeDrive);
+    // For use when not using triggers to operate the arm
+    // (new JoystickButton(m_xboxController, Constants.OI.kArmUpButton))
+    //   .whenPressed(ArmCommands.armUp(m_arm));
+
+    // (new JoystickButton(m_xboxController, Constants.OI.kArmDownButton))
+    //   .whenPressed(ArmCommands.armDown(m_arm));
+
+    // Uncomment this when you want buttons to switch between tank and arcade drive
+    // (new JoystickButton(m_xboxController, Constants.OI.kTankDriveButton))
+      // .whenPressed(DrivetrainCommands.tankDriveXboxController(m_drivetrain, m_xboxController));
+    // (new JoystickButton(m_xboxController, Constants.OI.kArcadeDriveButton))
+      // .whenPressed(DrivetrainCommands.arcadeDriveXboxController(m_drivetrain, m_xboxController));
   }
 
   /**
