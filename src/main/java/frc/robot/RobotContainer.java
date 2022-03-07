@@ -4,7 +4,6 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -22,28 +21,19 @@ import frc.robot.subsystems.IntakeSubsystem;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
   public static final DrivetrainSubsystem m_drivetrain = new DrivetrainSubsystem();
   public static final ArmSubsystem m_arm = new ArmSubsystem();
   public static final IntakeSubsystem m_intake = new IntakeSubsystem();
 
   public static final XboxController m_xboxController = new XboxController(Constants.OI.kXboxController);
 
-  /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    // Configure the button bindings
     configureButtonBindings();
 
     m_drivetrain.setDefaultCommand(DrivetrainCommands.tankDriveXboxController(m_drivetrain, m_xboxController));
     m_arm.setDefaultCommand(ArmCommands.armTriggerOperation(m_arm, m_xboxController));
   }
 
-  /**
-   * Use this method to define your button->command mappings. Buttons can be created by
-   * instantiating a {@link GenericHID} or one of its subclasses ({@link
-   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
-   * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
-   */
   private void configureButtonBindings() {
     (new JoystickButton(m_xboxController, Constants.OI.kIntakeInButton))
       .whileHeld(IntakeCommands.intakeIn(m_intake))
@@ -62,16 +52,11 @@ public class RobotContainer {
 
     // Uncomment this when you want buttons to switch between tank and arcade drive
     // (new JoystickButton(m_xboxController, Constants.OI.kTankDriveButton))
-      // .whenPressed(DrivetrainCommands.tankDriveXboxController(m_drivetrain, m_xboxController));
+    //  .whenPressed(DrivetrainCommands.tankDriveXboxController(m_drivetrain, m_xboxController));
     // (new JoystickButton(m_xboxController, Constants.OI.kArcadeDriveButton))
-      // .whenPressed(DrivetrainCommands.arcadeDriveXboxController(m_drivetrain, m_xboxController));
+    //  .whenPressed(DrivetrainCommands.arcadeDriveXboxController(m_drivetrain, m_xboxController));
   }
 
-  /**
-   * Use this to pass the autonomous command to the main {@link Robot} class.
-   *
-   * @return the command to run in autonomous
-   */
   public Command getAutonomousCommand() {
     return Auto.getAutoCommand(m_drivetrain);
   }
