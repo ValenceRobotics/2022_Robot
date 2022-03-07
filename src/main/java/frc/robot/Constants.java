@@ -55,21 +55,21 @@ public final class Constants {
 
     public static final class Arm {
         public static final int kArmMotor = 10;
-        public static final double kArmMaxSpeed = 0; // ADJUST THIS
+        public static final double kArmMaxSpeed = .5; // ADJUST THIS
         public static final double kArmBottomPositionEncoderReading = 0; // ADJUST THIS
         public static final double kArmTopPositionEncoderReading = 0; // ADJUST THIS
         public static final int kArmEncoder = 0; // ADJUST THIS
         public static final double kArmEncoderDistance = 0; // ADJUST THIS
         public static final PIDController kArmPID = new PIDController(0, 0, 0); // ADJUST THESE
-        public static final double kArmUp = 0; // ADJUST THIS
-        public static final double kArmDown = 0; // ADJUST THIS
+        public static final double kArmUp = .25; // ADJUST THIS
+        public static final double kArmDown = -.2; // ADJUST THIS
         public static final double kArmHold = 0; // ADJUST THIS
     }
 
     public static final class Intake {
         public static final int kIntakeMotor = 4;
 
-        public static final double kIntakeSpeed = 0.1;
+        public static final double kIntakeSpeed = 0.5;
     }
 
     public static final class OI {
@@ -80,10 +80,10 @@ public final class Constants {
         public static final int kArmUpButton = 1;
         public static final int kArmDownButton = 2;
 
-        public static final int kIntakeInButton = 3;
-        public static final int kIntakeOutButton = 4;
+        public static final int kIntakeInButton = 5;
+        public static final int kIntakeOutButton = 6;
 
-        public static final int kTankDriveButton = 5;
-        public static final int kArcadeDriveButton = 6;
+        //public static final int kTankDriveButton = 100;
+        //public static final int kArcadeDriveButton = 6;
     }
 } 

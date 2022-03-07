@@ -73,7 +73,7 @@ public class Drivetrain extends SubsystemBase  {
 
     public void arcadeDrive(double throttle, double turn) {
         m_leftFront.set(throttle + turn);
-        turn *= 0.8;
+        turn *= 0.5;
         m_rightFront.set(throttle - turn);
     }
 

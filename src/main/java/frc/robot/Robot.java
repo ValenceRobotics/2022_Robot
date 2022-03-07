@@ -44,6 +44,15 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
+    if (RobotContainer.m_xboxController.getLeftTriggerAxis() > .5){
+      System.out.println("it is up"); 
+      RobotContainer.m_arm.driveArm(Constants.Arm.kArmUp);
+    }
+
+    if (RobotContainer.m_xboxController.getRightTriggerAxis() > .5){
+      System.out.println("it is down");
+      RobotContainer.m_arm.driveArm(Constants.Arm.kArmDown);
+    }
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
