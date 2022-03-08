@@ -11,7 +11,8 @@ public class IntakeCommands {
     }
 
     public static Command intakeOut(IntakeSubsystem intake) {
-        return new InstantCommand(() -> intake.driveIntake(-Constants.Intake.kIntakeSpeed), intake);
+        
+        return new InstantCommand(() -> intake.driveIntake(Constants.Intake.kOutakeSpeed), intake);
     }
 
     public static Command intakeStop(IntakeSubsystem intake) {

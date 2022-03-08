@@ -3,12 +3,15 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+import com.ctre.phoenix.sensors.BasePigeon;
 import com.ctre.phoenix.sensors.WPI_Pigeon2;
+import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -24,7 +27,9 @@ public class DrivetrainSubsystem extends SubsystemBase  {
     private final Encoder leftEnc;
     private final Encoder rightEnc;
 
-    private final WPI_Pigeon2 m_imu = new WPI_Pigeon2(4);
+    
+    private AHRS m_imu = new AHRS(I2C.Port.kOnboard);
+    //private final WPI_Pigeon2 m_imu = new WPI_Pigeon2(Constants.Drivetrain.kPigeonIMU);
 
     private final DifferentialDriveOdometry m_odometry = new DifferentialDriveOdometry(m_imu.getRotation2d(), Constants.Drivetrain.kStartPosition);
     private final Field2d m_field = new Field2d();
@@ -56,7 +61,8 @@ public class DrivetrainSubsystem extends SubsystemBase  {
 
         resetEncoders();
 
-        m_imu.configFactoryDefault();
+        //m_imu.configFactoryDefault();
+        //m_imu.configMountPose(-180, 0, 90);
 
         SmartDashboard.putData("Field", m_field);
     }
@@ -73,7 +79,7 @@ public class DrivetrainSubsystem extends SubsystemBase  {
 
     public void arcadeDrive(double throttle, double turn) {
         m_leftFront.set(throttle + turn);
-        turn *= 0.5;
+        turn *= 0.3;
         m_rightFront.set(throttle - turn);
     }
 

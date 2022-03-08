@@ -4,6 +4,9 @@
 
 package frc.robot;
 
+import java.lang.ModuleLayer.Controller;
+
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -26,23 +29,23 @@ public class RobotContainer {
   public static final DrivetrainSubsystem m_drivetrain = new DrivetrainSubsystem();
   public static final ArmSubsystem m_arm = new ArmSubsystem();
   public static final IntakeSubsystem m_intake = new IntakeSubsystem();
-
   public static final XboxController m_xboxController = new XboxController(Constants.OI.kXboxController);
+  public static final Joystick m_GamePadController = new Joystick(Constants.OI.kGamePadController);
   
 
   public RobotContainer() {
     configureButtonBindings();
 
-    m_drivetrain.setDefaultCommand(DrivetrainCommands.tankDriveXboxController(m_drivetrain, m_xboxController));
+    m_drivetrain.setDefaultCommand(DrivetrainCommands.arcadeDriveXboxController(m_drivetrain, m_xboxController));
     m_arm.setDefaultCommand(new DriveArmCommand(m_xboxController, m_arm));
   }
 
   private void configureButtonBindings() {
-    (new JoystickButton(m_xboxController, Constants.OI.kIntakeInButton))
+    (new JoystickButton(m_GamePadController, Constants.OI.kIntakeInButton))
       .whileHeld(IntakeCommands.intakeIn(m_intake))
       .whenReleased(IntakeCommands.intakeStop(m_intake));
 
-    (new JoystickButton(m_xboxController, Constants.OI.kIntakeOutButton))
+    (new JoystickButton(m_GamePadController, Constants.OI.kIntakeOutButton))
       .whileHeld(IntakeCommands.intakeOut(m_intake))
       .whenReleased(IntakeCommands.intakeStop(m_intake));
 

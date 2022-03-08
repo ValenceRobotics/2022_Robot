@@ -24,7 +24,7 @@ public class DriveArmCommand extends CommandBase {
     // Use addRequirements() here to declare subsystem dependencies.
     this.armSubsystem = armSubsystem;
     this.controller = controller;
-    this.armHoldCommandPID = new ScheduleCommand(new ArmHoldPIDCommand(armSubsystem));
+    this.armHoldCommandPID = new ScheduleCommand(new ArmHoldPIDCommand(controller, armSubsystem));
 
     addRequirements(armSubsystem);
   }
@@ -36,19 +36,26 @@ public class DriveArmCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    System.out.println("arm drive");
+
+    if (controller.getYButton()) {
+      armSubsystem.setHoldPos();
+    }
     if (controller.getLeftTriggerAxis() >= 0.5) {
           armSubsystem.driveArm(Constants.Arm.kArmUp);
+          System.out.println("arm up");
       } else if (controller.getRightTriggerAxis() >= 0.5) {
           armSubsystem.driveArm(Constants.Arm.kArmDown);
+          System.out.println("arm down");
       } else {
-          armHoldCommandPID.schedule();
+          //armHoldCommandPID.schedule();
       }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    armSubsystem.driveArm(0);
+    // armSubsystem.driveArm(0);
   }
 
   // Returns true when the command should end.

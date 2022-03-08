@@ -5,6 +5,8 @@
 package frc.robot.commands.arm;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.subsystems.ArmSubsystem;
 
@@ -13,20 +15,27 @@ import frc.robot.subsystems.ArmSubsystem;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class ArmHoldPIDCommand extends PIDCommand {
   /** Creates a new ArmHoldPIDCommand. */
-  public ArmHoldPIDCommand(ArmSubsystem armSubsystem) {
+  private final ArmSubsystem armSubsystem;
+  private final XboxController controller;
+
+  public ArmHoldPIDCommand(XboxController controller, ArmSubsystem armSubsystem) {
     super(
         // The controller that the command will use
-        new PIDController(0, 0, 0),
+        new PIDController(.5, 0, 0),
         // This should return the measurement
         armSubsystem::getArmPosition,
         // This should return the setpoint (can also be a constant)
-        armSubsystem.holdPosition,
+        armSubsystem.getHoldPos(),
         // This uses the output
         output -> {
           // Use the output here
           armSubsystem.driveArm(output);
+          SmartDashboard.putNumber("pid output", output);
+          SmartDashboard.putNumber("setpoint", armSubsystem.getHoldPos());
         });
     addRequirements(armSubsystem);
+    this.armSubsystem = armSubsystem;
+    this.controller = controller;
     // Configure additional PID options by calling `getController` here.
     getController().setTolerance(.5);
   }
@@ -41,6 +50,18 @@ public class ArmHoldPIDCommand extends PIDCommand {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return getController().atSetpoint();
+    return (controller.getLeftTriggerAxis() < .5 && controller.getRightTriggerAxis() < .5);
   }
+
+  @Override
+  public void initialize() {
+    // TODO Auto-generated method stub
+    super.initialize();
+  }
+
+  // @Override
+  // public void end(boolean interrupted) {
+  //     // TODO Auto-generated method stub
+  //     super.end(interrupted);
+  // }
 }

@@ -32,7 +32,7 @@ public final class Constants {
         public static final int[] kLeftEnc = {7,6};
         public static final int[] kRightEnc = {9,8};
 
-        public static final int kPigeonIMU = 15;
+        public static final int kPigeonIMU = 0;
         public static final int kCountsPerRev = 4096;
         public static final double kSensorGearRatio = 1;
         public static final double kGearRatio = 10.71;
@@ -70,10 +70,12 @@ public final class Constants {
         public static final int kIntakeMotor = 4;
 
         public static final double kIntakeSpeed = 0.5;
+        public static final double kOutakeSpeed = -0.75;
     }
 
     public static final class OI {
-        public static final int kXboxController = 0;
+        public static final int kXboxController = 1;
+        public static final int kGamePadController = 0;
         public static final int kJoystickLeft = 1;
         public static final int kJoystickRight = 0;
 
