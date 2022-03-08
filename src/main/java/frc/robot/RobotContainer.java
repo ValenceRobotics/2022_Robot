@@ -37,7 +37,8 @@ public class RobotContainer {
     configureButtonBindings();
 
     m_drivetrain.setDefaultCommand(DrivetrainCommands.arcadeDriveXboxController(m_drivetrain, m_xboxController));
-    m_arm.setDefaultCommand(new DriveArmCommand(m_xboxController, m_arm));
+    // m_arm.setDefaultCommand(new DriveArmCommand(m_xboxController, m_arm));
+    m_arm.setDefaultCommand(ArmCommands.armPidUp(m_arm));
   }
 
   private void configureButtonBindings() {
@@ -50,11 +51,11 @@ public class RobotContainer {
       .whenReleased(IntakeCommands.intakeStop(m_intake));
 
     // For use when not using triggers to operate the arm
-    // (new JoystickButton(m_xboxController, Constants.OI.kArmUpButton))
-    //   .whenPressed(ArmCommands.armUp(m_arm));
+    (new JoystickButton(m_xboxController, Constants.OI.kArmUpButton))
+      .whenPressed(ArmCommands.armPidUp(m_arm));
 
-    // (new JoystickButton(m_xboxController, Constants.OI.kArmDownButton))
-    //   .whenPressed(ArmCommands.armDown(m_arm));
+    (new JoystickButton(m_xboxController, Constants.OI.kArmDownButton))
+      .whenPressed(ArmCommands.armPidDown(m_arm));
 
     // Uncomment this when you want buttons to switch between tank and arcade drive
     // (new JoystickButton(m_xboxController, Constants.OI.kTankDriveButton))

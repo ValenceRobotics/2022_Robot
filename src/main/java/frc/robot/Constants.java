@@ -56,11 +56,11 @@ public final class Constants {
     public static final class Arm {
         public static final int kArmMotor = 10;
         public static final double kArmMaxSpeed = .5; // ADJUST THIS
-        public static final double kArmBottomPositionEncoderReading = 0; // ADJUST THIS
-        public static final double kArmTopPositionEncoderReading = 0; // ADJUST THIS
+        public static final double kArmBottomPositionEncoderReading = -1; // ADJUST THIS
+        public static final double kArmTopPositionEncoderReading = 16; // ADJUST THIS
         public static final int kArmEncoder = 0; // ADJUST THIS
         public static final double kArmEncoderDistance = 0; // ADJUST THIS
-        public static final PIDController kArmPID = new PIDController(0, 0, 0); // ADJUST THESE
+        public static final PIDController kArmPID = new PIDController(0.015, 0.03, 0); // ADJUST THESE
         public static final double kArmUp = .25; // ADJUST THIS
         public static final double kArmDown = -.2; // ADJUST THIS
         public static final double kArmHold = 0; // ADJUST THIS
