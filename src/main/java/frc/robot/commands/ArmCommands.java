@@ -44,20 +44,4 @@ public class ArmCommands {
     public static Command armResetEncoder(ArmSubsystem arm) {
         return new InstantCommand(() -> arm.resetArmEncoder());
     }
-
-//   Could be useful later, ignore for now
-//   private final Command m_armUpCommand = new PIDCommand(
-//     Constants.Arm.kArmPID, 
-//     m_arm::getArmPosition, 
-//     Constants.Arm.kArmTopPositionEncoderReading, 
-//     m_arm::driveArm,
-//     m_arm
-//   );
-  // private final Command m_armDownCommand = new PIDCommand(
-  //   Constants.Arm.kArmPID, 
-  //   m_arm::getArmPosition, 
-  //   Constants.Arm.kArmBottomPositionEncoderReading, 
-  //   m_arm::driveArm,
-  //   m_arm
-  // );
 }

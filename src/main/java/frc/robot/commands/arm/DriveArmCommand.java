@@ -35,11 +35,11 @@ public class DriveArmCommand extends CommandBase {
       armSubsystem.setHoldPos();
     }
     if (controller.getLeftTriggerAxis() >= 0.5) {
-          armSubsystem.driveArm(Constants.Arm.kArmUp);
-          System.out.println("arm up");
-      } else if (controller.getRightTriggerAxis() >= 0.5) {
           armSubsystem.driveArm(Constants.Arm.kArmDown);
-          System.out.println("arm down");
+          // System.out.println("arm up");
+      } else if (controller.getRightTriggerAxis() >= 0.5) {
+          armSubsystem.driveArm(Constants.Arm.kArmUp);
+          // System.out.println("arm down");
       } else {
           //armHoldCommandPID.schedule();
       }

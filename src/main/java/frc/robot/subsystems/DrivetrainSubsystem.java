@@ -4,9 +4,6 @@ import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.kauailabs.navx.frc.AHRS;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.RelativeEncoder;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
@@ -83,8 +80,8 @@ public class DrivetrainSubsystem extends SubsystemBase  {
     }
 
     public void arcadeDrive(double throttle, double turn) {
+        turn *= 0.4;
         m_leftFront.set(throttle + turn);
-        turn *= 0.3;
         m_rightFront.set(throttle - turn);
     }
 

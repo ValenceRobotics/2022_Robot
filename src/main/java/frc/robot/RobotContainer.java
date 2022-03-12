@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.ArmCommands;
 import frc.robot.commands.DrivetrainCommands;
 import frc.robot.commands.IntakeCommands;
+import frc.robot.commands.arm.DriveArmCommand;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -33,8 +34,8 @@ public class RobotContainer {
     configureButtonBindings();
 
     m_drivetrain.setDefaultCommand(DrivetrainCommands.arcadeDriveXboxController(m_drivetrain, m_xboxController));
-    // m_arm.setDefaultCommand(new DriveArmCommand(m_xboxController, m_arm));
-    m_arm.setDefaultCommand(ArmCommands.armPidDown(m_arm));
+    m_arm.setDefaultCommand(new DriveArmCommand(m_xboxController, m_arm));
+    // m_arm.setDefaultCommand(ArmCommands.armPidDown(m_arm));
   }
 
   private void configureButtonBindings() {
@@ -53,10 +54,15 @@ public class RobotContainer {
     (new JoystickButton(m_xboxController, Constants.OI.kArmDownButton))
       .whenPressed(ArmCommands.armPidDown(m_arm));
 
-    (new JoystickButton(m_xboxController, Constants.OI.kArmOverrideButton))
-      .whenPressed(ArmCommands.armTriggerOperation(m_arm, m_xboxController)); // TODO: TEST THIS 
+    // (new JoystickButton(m_xboxController, Constants.OI.kArmOverrideButton))
+    //   .whenPressed(ArmCommands.armTriggerOperation(m_arm, m_xboxController)); 
+    // (new JoystickButton(m_xboxController, Constants.OI.kArmOverrideDisableButton))
+    //   .whenReleased(ArmCommands.armPidDown(m_arm));
+
+      (new JoystickButton(m_xboxController, Constants.OI.kArmOverrideButton))
+      .whenPressed(DrivetrainCommands.arcadeDriveXboxControllerBackwards(m_drivetrain, m_xboxController)); 
     (new JoystickButton(m_xboxController, Constants.OI.kArmOverrideDisableButton))
-      .whenReleased(ArmCommands.armPidDown(m_arm));
+      .whenReleased(DrivetrainCommands.arcadeDriveXboxController(m_drivetrain, m_xboxController));
 
     // Uncomment this when you want buttons to switch between tank and arcade drive
     // (new JoystickButton(m_xboxController, Constants.OI.kTankDriveButton))
@@ -66,7 +72,7 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    // return Auto.getAutoCommand(m_drivetrain, m_arm, m_intake);
-    return Auto.getResetEncoder(m_arm);
+    return Auto.getAutoCommand(m_drivetrain, m_arm, m_intake);
+    // return Auto.getResetEncoder(m_arm);
   }
 }

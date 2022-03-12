@@ -81,13 +81,13 @@ public class Auto {
 
     public static Command getAutoCommand(DrivetrainSubsystem drivetrain, ArmSubsystem arm, IntakeSubsystem intake) {
         return 
-            IntakeCommands.intakeOut(intake) // Intake out
-            .andThen(new WaitCommand(Constants.TimedAuto.kOuttakeSeconds))
-            .andThen(IntakeCommands.intakeStop(intake))
-            .andThen(DrivetrainCommands.drivetrainDrive(drivetrain, Constants.TimedAuto.kBackwardSpeed, Constants.TimedAuto.kBackwardSpeed) // Drive backwards to clear the low goal
-            .andThen(new WaitCommand(Constants.TimedAuto.kBackwardSeconds)))
-            .andThen(DrivetrainCommands.drivetrainStop(drivetrain))
-            .andThen(getResetEncoder(arm)); // Reset encoder
+            // IntakeCommands.intakeOut(intake) // Intake out
+            // .andThen(new WaitCommand(Constants.TimedAuto.kOuttakeSeconds))
+            // .andThen(IntakeCommands.intakeStop(intake))
+            DrivetrainCommands.drivetrainDrive(drivetrain, Constants.TimedAuto.kBackwardSpeed, Constants.TimedAuto.kBackwardSpeed) // Drive backwards to clear the low goal
+            .andThen(new WaitCommand(Constants.TimedAuto.kBackwardSeconds))
+            .andThen(DrivetrainCommands.drivetrainStop(drivetrain));
+            // .andThen(getResetEncoder(arm)); // Reset encoder
     }
 
     public static Command getResetEncoder(ArmSubsystem arm) { // TODO: Tune this sequence
@@ -95,7 +95,7 @@ public class Auto {
             ArmCommands.armUpViolent(arm)
             .andThen(new WaitCommand(Constants.TimedAuto.kArmUpViolentSeconds))
             .andThen(ArmCommands.armDown(arm))
-            .andThen(new WaitCommand(10))
+            .andThen(new WaitCommand(3))
             .andThen(() -> arm.resetArmEncoder(), arm)
             .andThen(ArmCommands.armPidDown(arm));
     }
