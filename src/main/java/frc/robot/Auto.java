@@ -81,11 +81,8 @@ public class Auto {
 
     public static Command getAutoCommand(DrivetrainSubsystem drivetrain, ArmSubsystem arm, IntakeSubsystem intake) {
         return 
-            DrivetrainCommands.drivetrainDrive(drivetrain, Constants.TimedAuto.kForwardSpeed, Constants.TimedAuto.kForwardSpeed) // Drive to low goal
-            .andThen(new WaitCommand(Constants.TimedAuto.kForwardSeconds)
-            .andThen(DrivetrainCommands.drivetrainStop(drivetrain))
-            .andThen(IntakeCommands.intakeOut(intake)) // Intake out
-            .andThen(new WaitCommand(Constants.TimedAuto.kOuttakeSeconds)))
+            IntakeCommands.intakeOut(intake) // Intake out
+            .andThen(new WaitCommand(Constants.TimedAuto.kOuttakeSeconds))
             .andThen(IntakeCommands.intakeStop(intake))
             .andThen(DrivetrainCommands.drivetrainDrive(drivetrain, Constants.TimedAuto.kBackwardSpeed, Constants.TimedAuto.kBackwardSpeed) // Drive backwards to clear the low goal
             .andThen(new WaitCommand(Constants.TimedAuto.kBackwardSeconds)))
@@ -98,7 +95,7 @@ public class Auto {
             ArmCommands.armUpViolent(arm)
             .andThen(new WaitCommand(Constants.TimedAuto.kArmUpViolentSeconds))
             .andThen(ArmCommands.armDown(arm))
-            .andThen(new WaitCommand(Constants.TimedAuto.kArmDownSeconds))
+            .andThen(new WaitCommand(10))
             .andThen(() -> arm.resetArmEncoder(), arm)
             .andThen(ArmCommands.armPidDown(arm));
     }

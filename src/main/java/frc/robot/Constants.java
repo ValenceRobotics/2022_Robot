@@ -57,17 +57,17 @@ public final class Constants {
 
     public static final class TimedAuto {
         public static final double kForwardSpeed = 0.2; // TODO: Determine if too fast or too slow
-        public static final double kBackwardSpeed = -0.2; // TODO: Determine if too fast or too slow
+        public static final double kBackwardSpeed = -0.3; // TODO: Determine if too fast or too slow
         public static final double kForwardSeconds = 2; // TODO: Determine if too long or too short
         public static final double kBackwardSeconds = 2; // TODO: Determine if too long or too short
-        public static final double kArmDownSeconds = 3.5; // TODO: Determine if too long or too short
-        public static final double kArmUpViolentSeconds = 0.5; // TODO: Determine if too long or too short
+        public static final double kArmDownSeconds = 10; // TODO: Determine if too long or too short
+        public static final double kArmUpViolentSeconds = 0.75; // TODO: Determine if too long or too short
         public static final double kOuttakeSeconds = 1; // TODO: Determine if too long or too short
     }
 
     public static final class Arm {
         public static final int kArmMotor = 10;
-        public static final double kArmMaxSpeed = .5; // ADJUST THIS
+        public static final double kArmMaxSpeed = 0.8; // ADJUST THIS
         public static final double kArmBottomPositionEncoderReading = -1; // ADJUST THIS
         public static final double kArmTopPositionEncoderReading = 16; // ADJUST THIS
         public static final int kArmEncoder = 0; // ADJUST THIS
@@ -75,16 +75,16 @@ public final class Constants {
         public static final PIDController kArmPIDUp = new PIDController(0.05, 0.02, 0.00); // ADJUST THESE
         public static final PIDController kArmPIDDown = new PIDController(0.04, 0.022, 0.00); // ADJUST THESE
         public static final double kArmUp = .25; // ADJUST THIS
-        public static final double kArmDown = -0.3; // ADJUST THIS
+        public static final double kArmDown = -0.8; // ADJUST THIS
         public static final double kArmHold = 0; // ADJUST THIS
-        public static final double kArmUpViolent = 0.6; // TODO: Determine if this is SAFE and enough or not
+        public static final double kArmUpViolent = 0.6; 
     }
 
     public static final class Intake {
         public static final int kIntakeMotor = 4;
 
         public static final double kIntakeSpeed = -0.5;
-        public static final double kOutakeSpeed = 0.1;
+        public static final double kOutakeSpeed = 1;
     }
 
     public static final class OI {

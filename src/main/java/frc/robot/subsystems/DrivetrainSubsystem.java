@@ -29,9 +29,6 @@ public class DrivetrainSubsystem extends SubsystemBase  {
 
 //    private final PWMSparkMax m_sparkMaxEncoderLeft = new PWMSparkMax(0);
 //    private final CANSparkMax
-    private final CANSparkMax m_sparkMaxEncoderLeft = new CANSparkMax(15, MotorType.kBrushless);
-    private final RelativeEncoder m_encoder = m_sparkMaxEncoderLeft.getEncoder();
-    
     private AHRS m_imu = new AHRS(I2C.Port.kOnboard);
     //private final WPI_Pigeon2 m_imu = new WPI_Pigeon2(Constants.Drivetrain.kPigeonIMU);
 
@@ -54,7 +51,6 @@ public class DrivetrainSubsystem extends SubsystemBase  {
         //leftEnc.setDistancePerRotation(360);
         // m_sparkMaxEncoderLeft.getEncoder()
 
-        m_encoder.setPosition(0);
         // set follow for rear motors
         m_leftRear.follow(m_leftFront);
         m_rightRear.follow(m_rightFront);
@@ -98,7 +94,6 @@ public class DrivetrainSubsystem extends SubsystemBase  {
         //m_field.setRobotPose(getPose());
         // SmartDashboard.putNumber("encoder left", leftEnc.get());
         // SmartDashboard.putNumber("encoder right", rightEnc.get())x;
-        SmartDashboard.putNumber("encoder left", m_encoder.getPosition());
     }
 
     private void resetEncoders() {
