@@ -29,8 +29,10 @@ public final class Constants {
         public static final int kRightFront = 0;
         public static final int kRightRear = 2;
 
-        public static final int[] kLeftEnc = {7,6};
-        public static final int[] kRightEnc = {9,8};
+       // public static final int[] kLeftEnc = {5,6};
+        public static final int kLeftEncA = 0;
+        public static final int kLeftEncB = 1;
+        public static final int[] kRightEnc = {3,2};
 
         public static final int kPigeonIMU = 0;
         public static final int kCountsPerRev = 4096;
@@ -53,6 +55,16 @@ public final class Constants {
         public static final double kRamseteZeta = 0;
     }
 
+    public static final class TimedAuto {
+        public static final double kForwardSpeed = 0.2; // TODO: Determine if too fast or too slow
+        public static final double kBackwardSpeed = -0.2; // TODO: Determine if too fast or too slow
+        public static final double kForwardSeconds = 2; // TODO: Determine if too long or too short
+        public static final double kBackwardSeconds = 2; // TODO: Determine if too long or too short
+        public static final double kArmDownSeconds = 3; // TODO: Determine if too long or too short
+        public static final double kArmDownViolent = 0.5; // TODO: Determine if too long or too short
+        public static final double kOuttakeSeconds = 1; // TODO: Determine if too long or too short
+    }
+
     public static final class Arm {
         public static final int kArmMotor = 10;
         public static final double kArmMaxSpeed = .5; // ADJUST THIS
@@ -60,10 +72,12 @@ public final class Constants {
         public static final double kArmTopPositionEncoderReading = 16; // ADJUST THIS
         public static final int kArmEncoder = 0; // ADJUST THIS
         public static final double kArmEncoderDistance = 0; // ADJUST THIS
-        public static final PIDController kArmPID = new PIDController(0.015, 0.03, 0); // ADJUST THESE
+        public static final PIDController kArmPIDUp = new PIDController(0.05, 0.02, 0.00); // ADJUST THESE
+        public static final PIDController kArmPIDDown = new PIDController(0.04, 0.022, 0.00); // ADJUST THESE
         public static final double kArmUp = .25; // ADJUST THIS
         public static final double kArmDown = -.2; // ADJUST THIS
         public static final double kArmHold = 0; // ADJUST THIS
+        public static final double kArmDownViolent = -0.5; // TODO: Determine if this is SAFE and enough or not
     }
 
     public static final class Intake {
@@ -84,6 +98,9 @@ public final class Constants {
 
         public static final int kIntakeInButton = 5;
         public static final int kIntakeOutButton = 6;
+
+        public static final int kArmOverrideButton = 4;
+        public static final int kArmOverrideDisableButton = 3;
 
         //public static final int kTankDriveButton = 100;
         //public static final int kArcadeDriveButton = 6;

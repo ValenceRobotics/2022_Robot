@@ -4,12 +4,8 @@
 
 package frc.robot.commands.arm;
 
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.PIDCommand;
-import edu.wpi.first.wpilibj2.command.ScheduleCommand;
 import frc.robot.Constants;
 import frc.robot.subsystems.ArmSubsystem;
 
@@ -18,13 +14,10 @@ public class DriveArmCommand extends CommandBase {
   private final ArmSubsystem armSubsystem; 
   private final XboxController controller;
 
-  private final ScheduleCommand armHoldCommandPID;
-
   public DriveArmCommand(XboxController controller, ArmSubsystem armSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.armSubsystem = armSubsystem;
     this.controller = controller;
-    this.armHoldCommandPID = new ScheduleCommand(new ArmHoldPIDCommand(controller, armSubsystem));
 
     addRequirements(armSubsystem);
   }

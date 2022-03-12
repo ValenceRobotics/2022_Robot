@@ -3,16 +3,16 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
-import com.ctre.phoenix.sensors.BasePigeon;
-import com.ctre.phoenix.sensors.WPI_Pigeon2;
 import com.kauailabs.navx.frc.AHRS;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.I2C;
-import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -24,9 +24,13 @@ public class DrivetrainSubsystem extends SubsystemBase  {
     private final WPI_TalonSRX m_rightFront = new WPI_TalonSRX(Constants.Drivetrain.kRightFront);
     private final WPI_VictorSPX m_rightRear = new WPI_VictorSPX(Constants.Drivetrain.kRightRear);
 
-    private final Encoder leftEnc;
-    private final Encoder rightEnc;
+   private final Encoder leftEnc;
+   //private final Encoder rightEnc;
 
+//    private final PWMSparkMax m_sparkMaxEncoderLeft = new PWMSparkMax(0);
+//    private final CANSparkMax
+    private final CANSparkMax m_sparkMaxEncoderLeft = new CANSparkMax(15, MotorType.kBrushless);
+    private final RelativeEncoder m_encoder = m_sparkMaxEncoderLeft.getEncoder();
     
     private AHRS m_imu = new AHRS(I2C.Port.kOnboard);
     //private final WPI_Pigeon2 m_imu = new WPI_Pigeon2(Constants.Drivetrain.kPigeonIMU);
@@ -42,10 +46,15 @@ public class DrivetrainSubsystem extends SubsystemBase  {
         m_rightRear.configFactoryDefault();
 
         //encoders
-        leftEnc = new Encoder(Constants.Drivetrain.kLeftEnc[0], Constants.Drivetrain.kLeftEnc[1], true, EncodingType.k4X);
-        rightEnc = new Encoder(Constants.Drivetrain.kRightEnc[0], Constants.Drivetrain.kRightEnc[1], true, EncodingType.k4X);
+        leftEnc = new Encoder(0, 1);
+        //rightEnc = new Encoder(Constants.Drivetrain.kRightEnc[0], Constants.Drivetrain.kRightEnc[1], true, EncodingType.k4X);
         leftEnc.setReverseDirection(false);
+       // leftEnc.reset();
+       // rightEnc.reset();
+        //leftEnc.setDistancePerRotation(360);
+        // m_sparkMaxEncoderLeft.getEncoder()
 
+        m_encoder.setPosition(0);
         // set follow for rear motors
         m_leftRear.follow(m_leftFront);
         m_rightRear.follow(m_rightFront);
@@ -85,13 +94,16 @@ public class DrivetrainSubsystem extends SubsystemBase  {
 
     @Override
     public void periodic() {
-        //m_odometry.update(m_imu.getRotation2d(), quadratureUnitsToMeters(m_leftFront.getSelectedSensorPosition()), quadratureUnitsToMeters(m_rightFront.getSelectedSensorPosition()));
+        //m_odometry.update(m_imu.getRotation2d(), quadratureUnitsT oMeters(m_leftFront.getSelectedSensorPosition()), quadratureUnitsToMeters(m_rightFront.getSelectedSensorPosition()));
         //m_field.setRobotPose(getPose());
+        // SmartDashboard.putNumber("encoder left", leftEnc.get());
+        // SmartDashboard.putNumber("encoder right", rightEnc.get())x;
+        SmartDashboard.putNumber("encoder left", m_encoder.getPosition());
     }
 
     private void resetEncoders() {
         leftEnc.reset();
-        rightEnc.reset();
+     //   rightEnc.reset();
     }
 
     public Pose2d getPose() {

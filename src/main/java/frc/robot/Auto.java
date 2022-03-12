@@ -12,12 +12,18 @@ import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
+import frc.robot.commands.ArmCommands;
+import frc.robot.commands.DrivetrainCommands;
+import frc.robot.commands.IntakeCommands;
+import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 
 public class Auto {
-    public static Command getAutoCommand(DrivetrainSubsystem drivetrain) {
+    public static Command getAutoCommandSad(DrivetrainSubsystem drivetrain) {
         var autoVoltageConstraint =
         new DifferentialDriveVoltageConstraint(
             new SimpleMotorFeedforward(
@@ -71,5 +77,29 @@ public class Auto {
 
     // Run path following command, then stop at the end.
     return ramseteCommand.andThen(() -> drivetrain.tankDriveVolts(0.0, 0.0));
+    }
+
+    public static Command getAutoCommand(DrivetrainSubsystem drivetrain, ArmSubsystem arm, IntakeSubsystem intake) {
+        return 
+            DrivetrainCommands.drivetrainDrive(drivetrain, Constants.TimedAuto.kForwardSpeed, Constants.TimedAuto.kForwardSpeed) // Drive to low goal
+            .andThen(new WaitCommand(Constants.TimedAuto.kForwardSeconds)
+            .andThen(DrivetrainCommands.drivetrainStop(drivetrain))
+            .andThen(IntakeCommands.intakeOut(intake)) // Intake out
+            .andThen(new WaitCommand(Constants.TimedAuto.kOuttakeSeconds)))
+            .andThen(IntakeCommands.intakeStop(intake))
+            .andThen(DrivetrainCommands.drivetrainDrive(drivetrain, Constants.TimedAuto.kBackwardSpeed, Constants.TimedAuto.kBackwardSpeed) // Drive backwards to clear the low goal
+            .andThen(new WaitCommand(Constants.TimedAuto.kBackwardSeconds)))
+            .andThen(DrivetrainCommands.drivetrainStop(drivetrain))
+            .andThen(getResetEncoder(arm)); // Reset encoder
+    }
+
+    public static Command getResetEncoder(ArmSubsystem arm) { // TODO: Tune this sequence
+        return 
+            ArmCommands.armDownViolent(arm)
+            .andThen(new WaitCommand(Constants.TimedAuto.kArmDownViolent))
+            .andThen(ArmCommands.armDown(arm))
+            .andThen(new WaitCommand(Constants.TimedAuto.kArmDownSeconds))
+            .andThen(() -> arm.resetArmEncoder(), arm)
+            .andThen(ArmCommands.armPidDown(arm));
     }
 }

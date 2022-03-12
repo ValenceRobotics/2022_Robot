@@ -32,6 +32,11 @@ public class ArmSubsystem extends SubsystemBase {
         return 0.0;
     }
 
+    public void resetArmEncoder() {
+        m_armEncoder.setPosition(0);
+        System.out.println("Reset!");
+    }
+
     public void driveArm(double speed) {
         m_armMotor.set(MathUtil.clamp(speed, -Constants.Arm.kArmMaxSpeed, Constants.Arm.kArmMaxSpeed));
     }
