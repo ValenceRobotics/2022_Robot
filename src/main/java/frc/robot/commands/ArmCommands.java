@@ -21,17 +21,17 @@ public class ArmCommands {
         return new InstantCommand(() -> arm.driveArm(Constants.Arm.kArmUpViolent), arm);
     }
 
-    public static Command armTriggerOperation(ArmSubsystem arm, XboxController controller) {
-        return new RunCommand(() -> {
-            if (controller.getLeftTriggerAxis() > 0.5) {
-                arm.driveArm(Constants.Arm.kArmUp);
-            } else if (controller.getRightTriggerAxis() > 0.5) {
-                arm.driveArm(Constants.Arm.kArmDown);
-            } else {
+    // public static Command armTriggerOperation(ArmSubsystem arm, XboxController controller) {
+        // return new RunCommand(() -> {
+            //if (controller.getLeftTriggerAxis() > 0.5) {
+                // arm.driveArm(Constants.Arm.kArmUp);
+           // } else if (controller.getRightTriggerAxis() > 0.5) {
+                // arm.driveArm(Constants.Arm.kArmDown);
+            // } else {
                 
-            }
-        }, arm);
-    }
+            // }
+        // }, arm);
+    // }
 
     public static Command armPidUp(ArmSubsystem arm) {
         return new PIDCommand(Constants.Arm.kArmPIDUp, arm::getArmPosition, Constants.Arm.kArmTopPositionEncoderReading, arm::driveArm, arm);

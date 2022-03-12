@@ -78,13 +78,13 @@ public class Auto {
     // Run path following command, then stop at the end.
     return ramseteCommand.andThen(() -> drivetrain.tankDriveVolts(0.0, 0.0));
     }
-
+  
     public static Command getAutoCommand(DrivetrainSubsystem drivetrain, ArmSubsystem arm, IntakeSubsystem intake) {
         return 
-            // IntakeCommands.intakeOut(intake) // Intake out
-            // .andThen(new WaitCommand(Constants.TimedAuto.kOuttakeSeconds))
-            // .andThen(IntakeCommands.intakeStop(intake))
-            DrivetrainCommands.drivetrainDrive(drivetrain, Constants.TimedAuto.kBackwardSpeed, Constants.TimedAuto.kBackwardSpeed) // Drive backwards to clear the low goal
+            IntakeCommands.intakeOut(intake) // Intake out
+            .andThen(new WaitCommand(Constants.TimedAuto.kOuttakeSeconds))
+            .andThen(IntakeCommands.intakeStop(intake))
+            .andThen(DrivetrainCommands.drivetrainDrive(drivetrain, Constants.TimedAuto.kBackwardSpeed, Constants.TimedAuto.kBackwardSpeed)) // Drive backwards to clear the low goal
             .andThen(new WaitCommand(Constants.TimedAuto.kBackwardSeconds))
             .andThen(DrivetrainCommands.drivetrainStop(drivetrain));
             // .andThen(getResetEncoder(arm)); // Reset encoder

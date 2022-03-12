@@ -16,7 +16,7 @@ public class DrivetrainCommands {
     }
 
     public static Command arcadeDriveXboxControllerBackwards(DrivetrainSubsystem drivetrain, XboxController controller) {
-        return new RunCommand(() -> drivetrain.arcadeDrive(controller.getLeftY(), -controller.getRightX()), drivetrain);
+        return new RunCommand(() -> drivetrain.arcadeDrive(controller.getLeftY(), controller.getRightX()), drivetrain);
     }
 
 
