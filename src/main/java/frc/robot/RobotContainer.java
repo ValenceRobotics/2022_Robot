@@ -38,11 +38,11 @@ public class RobotContainer {
   }
 
   private void configureButtonBindings() {
-    (new JoystickButton(m_GamePadController, Constants.OI.kIntakeInButton))
+    (new JoystickButton(m_xboxController, Constants.OI.kIntakeInButton))
       .whileHeld(IntakeCommands.intakeIn(m_intake))
       .whenReleased(IntakeCommands.intakeStop(m_intake));
 
-    (new JoystickButton(m_GamePadController, Constants.OI.kIntakeOutButton))
+    (new JoystickButton(m_xboxController, Constants.OI.kIntakeOutButton))
       .whileHeld(IntakeCommands.intakeOut(m_intake))
       .whenReleased(IntakeCommands.intakeStop(m_intake));
 
@@ -66,6 +66,7 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    return Auto.getAutoCommand(m_drivetrain, m_arm, m_intake);
+    // return Auto.getAutoCommand(m_drivetrain, m_arm, m_intake);
+    return Auto.getResetEncoder(m_arm);
   }
 }

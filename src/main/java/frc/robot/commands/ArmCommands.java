@@ -17,8 +17,8 @@ public class ArmCommands {
         return new InstantCommand(() -> arm.driveArm(Constants.Arm.kArmDown), arm);
     }
 
-    public static Command armDownViolent(ArmSubsystem arm) {
-        return new InstantCommand(() -> arm.driveArm(Constants.Arm.kArmDownViolent), arm);
+    public static Command armUpViolent(ArmSubsystem arm) {
+        return new InstantCommand(() -> arm.driveArm(Constants.Arm.kArmUpViolent), arm);
     }
 
     public static Command armTriggerOperation(ArmSubsystem arm, XboxController controller) {
