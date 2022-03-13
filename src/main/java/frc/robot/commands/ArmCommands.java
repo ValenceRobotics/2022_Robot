@@ -15,7 +15,7 @@ public class ArmCommands {
     }
 
     public static Command armDown(ArmSubsystem arm) {
-        double armPower = SmartDashboard.getNumber("armPower", Constants.Arm.kArmDown);
+        double armPower = SmartDashboard.getNumber("armPowerDown", Constants.Arm.kArmDown);
         return new InstantCommand(() -> arm.driveArm(armPower), arm);
     }
 

@@ -74,11 +74,11 @@ public final class Constants {
         public static final double kArmEncoderDistance = 0; // ADJUST THIS
         public static final PIDController kArmPIDUp = new PIDController(0.05, 0.02, 0.00); // ADJUST THESE
         public static final PIDController kArmPIDDown = new PIDController(0.04, 0.022, 0.00); // ADJUST THESE
-        public static final double kArmUp = 0.6; // ADJUST THIS
-        public static final double kArmDown = -0.6; // ADJUST THIS
+        public static final double kArmUp = 0.2; // ADJUST THIS
+        public static final double kArmDown = -0.2; // ADJUST THIS
         public static final double kArmHold = 0; // ADJUST THIS
         public static final double kArmUpViolent = 0.4; 
-        public static final int kArmCurrentLimit = 5;
+        public static final int kArmCurrentLimit = 60;
     }
 
     public static final class Intake {
