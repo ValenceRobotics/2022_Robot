@@ -7,9 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.ArmCommands;
 import frc.robot.commands.DrivetrainCommands;
 import frc.robot.commands.IntakeCommands;
 import frc.robot.commands.arm.DriveArmCommand;
@@ -49,18 +47,18 @@ public class RobotContainer {
       .whenReleased(IntakeCommands.intakeStop(m_intake));
 
     // For use when not using triggers to operate the arm
-    (new JoystickButton(m_xboxController, Constants.OI.kArmUpButton))
-      .whenPressed(ArmCommands.armPidUp(m_arm));
+    // (new JoystickButton(m_xboxController, Constants.OI.kArmUpButton))
+    //   .whenPressed(ArmCommands.armPidUp(m_arm));
 
-    (new JoystickButton(m_xboxController, Constants.OI.kArmDownButton))
-      .whenPressed(ArmCommands.armPidDown(m_arm));
+    // (new JoystickButton(m_xboxController, Constants.OI.kArmDownButton))
+    //   .whenPressed(ArmCommands.armPidDown(m_arm));
 
     // (new JoystickButton(m_xboxController, Constants.OI.kArmOverrideButton))
     //   .whenPressed(ArmCommands.armTriggerOperation(m_arm, m_xboxController)); 
     // (new JoystickButton(m_xboxController, Constants.OI.kArmOverrideDisableButton))
     //   .whenReleased(ArmCommands.armPidDown(m_arm));
 
-      (new JoystickButton(m_xboxController, Constants.OI.kArmOverrideButton))
+    (new JoystickButton(m_xboxController, Constants.OI.kArmOverrideButton))
       .whenPressed(DrivetrainCommands.arcadeDriveXboxControllerBackwards(m_drivetrain, m_xboxController)); 
     (new JoystickButton(m_xboxController, Constants.OI.kArmOverrideDisableButton))
       .whenReleased(DrivetrainCommands.arcadeDriveXboxController(m_drivetrain, m_xboxController));

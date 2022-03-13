@@ -56,13 +56,13 @@ public final class Constants {
     }
 
     public static final class TimedAuto {
-        public static final double kForwardSpeed = 0.2; // TODO: Determine if too fast or too slow
-        public static final double kBackwardSpeed = -0.3; // TODO: Determine if too fast or too slow
-        public static final double kForwardSeconds = 2; // TODO: Determine if too long or too short
-        public static final double kBackwardSeconds = 3; // TODO: Determine if too long or too short
-        public static final double kArmDownSeconds = 10; // TODO: Determine if too long or too short
+        public static final double kForwardSpeed = 0.2;
+        public static final double kBackwardSpeed = -0.3; 
+        public static final double kForwardSeconds = 2;
+        public static final double kBackwardSeconds = 3;
+        public static final double kArmDownSeconds = 3; // TODO: Determine if too long or too short
         public static final double kArmUpViolentSeconds = 0.75; // TODO: Determine if too long or too short
-        public static final double kOuttakeSeconds = 1; // TODO: Determine if too long or too short
+        public static final double kOuttakeSeconds = 1;
     }
 
     public static final class Arm {
@@ -74,10 +74,10 @@ public final class Constants {
         public static final double kArmEncoderDistance = 0; // ADJUST THIS
         public static final PIDController kArmPIDUp = new PIDController(0.05, 0.02, 0.00); // ADJUST THESE
         public static final PIDController kArmPIDDown = new PIDController(0.04, 0.022, 0.00); // ADJUST THESE
-        public static final double kArmUp = .25; // ADJUST THIS
-        public static final double kArmDown = -0.7; // ADJUST THIS
+        public static final double kArmUp = 0.25; // ADJUST THIS
+        public static final double kArmDown = -0.25; // ADJUST THIS
         public static final double kArmHold = 0; // ADJUST THIS
-        public static final double kArmUpViolent = 0.6; 
+        public static final double kArmUpViolent = 0.4; 
     }
 
     public static final class Intake {

@@ -90,7 +90,7 @@ public class Auto {
             // .andThen(getResetEncoder(arm)); // Reset encoder
     }
 
-    public static Command getResetEncoder(ArmSubsystem arm) { // TODO: Tune this sequence
+    public static Command getResetEncoder(ArmSubsystem arm) {
         return 
             ArmCommands.armUpViolent(arm)
             .andThen(new WaitCommand(Constants.TimedAuto.kArmUpViolentSeconds))
