@@ -17,6 +17,7 @@ public class ArmSubsystem extends SubsystemBase {
     public ArmSubsystem() {
         // m_armMotor.configFactoryDefault();
         m_armMotor.setInverted(false);
+        m_armMotor.setSmartCurrentLimit(Constants.Arm.kArmCurrentLimit);
         // Set this accordingly depending the lights on the speed controller
         // m_armMotor.setInverted(true);
 
@@ -34,7 +35,6 @@ public class ArmSubsystem extends SubsystemBase {
 
     public void resetArmEncoder() {
         m_armEncoder.setPosition(0);
-        System.out.println("Reset!");
     }
 
     public void driveArm(double speed) {

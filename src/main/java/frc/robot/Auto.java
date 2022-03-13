@@ -90,13 +90,19 @@ public class Auto {
             // .andThen(getResetEncoder(arm)); // Reset encoder
     }
 
+    public static Command getDriveAuto(DrivetrainSubsystem drivetrain) {
+        return DrivetrainCommands.drivetrainDrive(drivetrain, Constants.TimedAuto.kBackwardSpeed, Constants.TimedAuto.kBackwardSpeed)
+            .andThen(new WaitCommand(Constants.TimedAuto.kBackwardSeconds))
+            .andThen(DrivetrainCommands.drivetrainStop(drivetrain));
+    }
+
     public static Command getResetEncoder(ArmSubsystem arm) {
         return 
             ArmCommands.armUpViolent(arm)
             .andThen(new WaitCommand(Constants.TimedAuto.kArmUpViolentSeconds))
             .andThen(ArmCommands.armDown(arm))
-            .andThen(new WaitCommand(3))
+            .andThen(new WaitCommand(Constants.TimedAuto.kArmDownSeconds))
             .andThen(() -> arm.resetArmEncoder(), arm)
-            .andThen(ArmCommands.armPidDown(arm));
+            .andThen(ArmCommands.armPidUp(arm));
     }
 }
