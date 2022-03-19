@@ -1,8 +1,10 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+import com.ctre.phoenix.sensors.WPI_Pigeon2;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.math.geometry.Pose2d;
@@ -21,13 +23,7 @@ public class DrivetrainSubsystem extends SubsystemBase  {
     private final WPI_TalonSRX m_rightFront = new WPI_TalonSRX(Constants.Drivetrain.kRightFront);
     private final WPI_VictorSPX m_rightRear = new WPI_VictorSPX(Constants.Drivetrain.kRightRear);
 
-   private final Encoder leftEnc;
-   //private final Encoder rightEnc;
-
-//    private final PWMSparkMax m_sparkMaxEncoderLeft = new PWMSparkMax(0);
-//    private final CANSparkMax
-    private AHRS m_imu = new AHRS(I2C.Port.kOnboard);
-    //private final WPI_Pigeon2 m_imu = new WPI_Pigeon2(Constants.Drivetrain.kPigeonIMU);
+    private final WPI_Pigeon2 m_imu = new WPI_Pigeon2(Constants.Drivetrain.kPigeonIMU);
 
     private final DifferentialDriveOdometry m_odometry = new DifferentialDriveOdometry(m_imu.getRotation2d(), Constants.Drivetrain.kStartPosition);
     private final Field2d m_field = new Field2d();
@@ -38,15 +34,6 @@ public class DrivetrainSubsystem extends SubsystemBase  {
         m_leftRear.configFactoryDefault();
         m_rightFront.configFactoryDefault();
         m_rightRear.configFactoryDefault();
-
-        //encoders
-        leftEnc = new Encoder(0, 1);
-        //rightEnc = new Encoder(Constants.Drivetrain.kRightEnc[0], Constants.Drivetrain.kRightEnc[1], true, EncodingType.k4X);
-        leftEnc.setReverseDirection(false);
-       // leftEnc.reset();
-       // rightEnc.reset();
-        //leftEnc.setDistancePerRotation(360);
-        // m_sparkMaxEncoderLeft.getEncoder()
 
         // set follow for rear motors
         m_leftRear.follow(m_leftFront);
@@ -60,6 +47,9 @@ public class DrivetrainSubsystem extends SubsystemBase  {
 
         m_leftFront.setSensorPhase(true);
         m_rightFront.setSensorPhase(true);
+
+        m_leftFront.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+        m_rightFront.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
 
         resetEncoders();
 
@@ -87,15 +77,19 @@ public class DrivetrainSubsystem extends SubsystemBase  {
 
     @Override
     public void periodic() {
-        //m_odometry.update(m_imu.getRotation2d(), quadratureUnitsT oMeters(m_leftFront.getSelectedSensorPosition()), quadratureUnitsToMeters(m_rightFront.getSelectedSensorPosition()));
-        //m_field.setRobotPose(getPose());
-        // SmartDashboard.putNumber("encoder left", leftEnc.get());
-        // SmartDashboard.putNumber("encoder right", rightEnc.get())x;
+        m_odometry.update(m_imu.getRotation2d(), quadratureUnitsToMeters(m_leftFront.getSelectedSensorPosition()), quadratureUnitsToMeters(m_rightFront.getSelectedSensorPosition()));
+        m_field.setRobotPose(getPose());
+        SmartDashboard.putNumber("encoder left", m_leftFront.getSelectedSensorPosition());
+        SmartDashboard.putNumber("encoder right", m_rightFront.getSelectedSensorPosition());
+
+        // For debug
+        System.out.println("Left: " + m_leftFront.getSelectedSensorPosition());
+        System.out.println("Right: " + m_rightFront.getSelectedSensorPosition());
     }
 
     private void resetEncoders() {
-        leftEnc.reset();
-     //   rightEnc.reset();
+        m_leftFront.setSelectedSensorPosition(0);
+        m_rightFront.setSelectedSensorPosition(0);
     }
 
     public Pose2d getPose() {
