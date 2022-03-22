@@ -86,8 +86,8 @@ public class Auto {
             .andThen(IntakeCommands.intakeStop(intake))
             .andThen(DrivetrainCommands.drivetrainDrive(drivetrain, Constants.TimedAuto.kBackwardSpeed, Constants.TimedAuto.kBackwardSpeed)) // Drive backwards to clear the low goal
             .andThen(new WaitCommand(Constants.TimedAuto.kBackwardSeconds))
-            .andThen(DrivetrainCommands.drivetrainStop(drivetrain));
-            // .andThen(getResetEncoder(arm)); // Reset encoder
+            .andThen(DrivetrainCommands.drivetrainStop(drivetrain))
+            .andThen(getResetEncoder(arm)); // Reset encoder
     }
 
     public static Command getDriveAuto(DrivetrainSubsystem drivetrain) {
