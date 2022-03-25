@@ -88,6 +88,12 @@ public final class Constants {
         public static final double kOutakeSpeed = 1;
     }
 
+    public static final class Climber {
+        public static final int kLeftClimb = 11;
+        public static final int kRightClimb = 12;
+
+    }
+
     public static final class OI {
         public static final int kXboxController = 1;
         public static final int kGamePadController = 0;

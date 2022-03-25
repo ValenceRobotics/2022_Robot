@@ -7,12 +7,14 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.ArmCommands;
 import frc.robot.commands.DrivetrainCommands;
 import frc.robot.commands.IntakeCommands;
 import frc.robot.commands.arm.DriveArmCommand;
 import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 
@@ -26,6 +28,7 @@ public class RobotContainer {
   public static final DrivetrainSubsystem m_drivetrain = new DrivetrainSubsystem();
   public static final ArmSubsystem m_arm = new ArmSubsystem();
   public static final IntakeSubsystem m_intake = new IntakeSubsystem();
+  public static final ClimberSubsystem m_climber = new ClimberSubsystem();
   public static final XboxController m_xboxController = new XboxController(Constants.OI.kXboxController);
   public static final Joystick m_GamePadController = new Joystick(Constants.OI.kGamePadController);
   
@@ -39,30 +42,31 @@ public class RobotContainer {
   }
 
   private void configureButtonBindings() {
-    (new JoystickButton(m_xboxController, Constants.OI.kIntakeInButton))
-      .whileHeld(IntakeCommands.intakeIn(m_intake))
-      .whenReleased(IntakeCommands.intakeStop(m_intake));
+    // (new JoystickButton(m_xboxController, Constants.OI.kIntakeInButton))
+    //   .whileHeld(IntakeCommands.intakeIn(m_intake))
+    //   .whenReleased(IntakeCommands.intakeStop(m_intake));
 
-    (new JoystickButton(m_xboxController, Constants.OI.kIntakeOutButton))
-      .whileHeld(IntakeCommands.intakeOut(m_intake))
-      .whenReleased(IntakeCommands.intakeStop(m_intake));
+    // (new JoystickButton(m_xboxController, Constants.OI.kIntakeOutButton))
+    //   .whileHeld(IntakeCommands.intakeOut(m_intake))
+    //   .whenReleased(IntakeCommands.intakeStop(m_intake));
 
-    // For use when not using triggers to operate the arm
+    // testing
     (new JoystickButton(m_xboxController, Constants.OI.kArmUpButton))
-      .whenPressed(ArmCommands.armPidUp(m_arm));
+      .whenPressed(new RunCommand(()->m_climber.setSpeed(.2), m_climber));
 
     (new JoystickButton(m_xboxController, Constants.OI.kArmDownButton))
-      .whenPressed(ArmCommands.armPidDown(m_arm));
+      .whenPressed(new RunCommand(()->m_climber.setSpeed(-.2), m_climber));
+
 
     // (new JoystickButton(m_xboxController, Constants.OI.kArmOverrideButton))
     //   .whenPressed(ArmCommands.armTriggerOperation(m_arm, m_xboxController)); 
     // (new JoystickButton(m_xboxController, Constants.OI.kArmOverrideDisableButton))
     //   .whenReleased(ArmCommands.armPidDown(m_arm));
 
-    (new JoystickButton(m_xboxController, Constants.OI.kArmOverrideButton))
-      .whenPressed(DrivetrainCommands.arcadeDriveXboxControllerBackwards(m_drivetrain, m_xboxController)); 
-    (new JoystickButton(m_xboxController, Constants.OI.kArmOverrideDisableButton))
-      .whenReleased(DrivetrainCommands.arcadeDriveXboxController(m_drivetrain, m_xboxController));
+    // (new JoystickButton(m_xboxController, Constants.OI.kArmOverrideButton))
+    //   .whenPressed(DrivetrainCommands.arcadeDriveXboxControllerBackwards(m_drivetrain, m_xboxController)); 
+    // (new JoystickButton(m_xboxController, Constants.OI.kArmOverrideDisableButton))
+    //   .whenReleased(DrivetrainCommands.arcadeDriveXboxController(m_drivetrain, m_xboxController));
 
     // Uncomment this when you want buttons to switch between tank and arcade drive
     // (new JoystickButton(m_xboxController, Constants.OI.kTankDriveButton))
