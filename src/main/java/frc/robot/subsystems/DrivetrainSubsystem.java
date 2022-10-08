@@ -20,10 +20,10 @@ public class DrivetrainSubsystem extends SubsystemBase  {
     private final WPI_TalonSRX m_rightFront = new WPI_TalonSRX(Constants.Drivetrain.kRightFront);
     private final WPI_VictorSPX m_rightRear = new WPI_VictorSPX(Constants.Drivetrain.kRightRear);
 
-    private final WPI_Pigeon2 m_imu = new WPI_Pigeon2(Constants.Drivetrain.kPigeonIMU);
+    // private final WPI_Pigeon2 m_imu = new WPI_Pigeon2(Constants.Drivetrain.kPigeonIMU);
 
-    private final DifferentialDriveOdometry m_odometry = new DifferentialDriveOdometry(m_imu.getRotation2d(), Constants.Drivetrain.kStartPosition);
-    private final Field2d m_field = new Field2d();
+    // private final DifferentialDriveOdometry m_odometry = new DifferentialDriveOdometry(m_imu.getRotation2d(), Constants.Drivetrain.kStartPosition);
+    // private final Field2d m_field = new Field2d();
 
     public DrivetrainSubsystem() {
         // reset all motors
@@ -53,7 +53,7 @@ public class DrivetrainSubsystem extends SubsystemBase  {
         //m_imu.configFactoryDefault();
         //m_imu.configMountPose(-180, 0, 90);
 
-        SmartDashboard.putData("Field", m_field);
+        // SmartDashboard.putData("Field", m_field);
     }
 
     public void tankDrive(double left, double right) {
@@ -74,14 +74,14 @@ public class DrivetrainSubsystem extends SubsystemBase  {
 
     @Override
     public void periodic() {
-        m_odometry.update(m_imu.getRotation2d(), quadratureUnitsToMeters(m_leftFront.getSelectedSensorPosition()), quadratureUnitsToMeters(m_rightFront.getSelectedSensorPosition()));
-        m_field.setRobotPose(getPose());
+        // m_odometry.update(m_imu.getRotation2d(), quadratureUnitsToMeters(m_leftFront.getSelectedSensorPosition()), quadratureUnitsToMeters(m_rightFront.getSelectedSensorPosition()));
+        // m_field.setRobotPose(getPose());
         SmartDashboard.putNumber("encoder left", m_leftFront.getSelectedSensorPosition());
         SmartDashboard.putNumber("encoder right", m_rightFront.getSelectedSensorPosition());
 
         // For debug
-        System.out.println("Left: " + m_leftFront.getSelectedSensorPosition());
-        System.out.println("Right: " + m_rightFront.getSelectedSensorPosition());
+        // System.out.println("Left: " + m_leftFront.getSelectedSensorPosition());
+        // System.out.println("Right: " + m_rightFront.getSelectedSensorPosition());
     }
 
     private void resetEncoders() {
@@ -89,13 +89,13 @@ public class DrivetrainSubsystem extends SubsystemBase  {
         m_rightFront.setSelectedSensorPosition(0);
     }
 
-    public Pose2d getPose() {
-        return m_odometry.getPoseMeters();
-    }
+    // public Pose2d getPose() {
+        // return m_odometry.getPoseMeters();
+    // }
 
     public void setPose(Pose2d pose) {
         resetEncoders();
-        m_odometry.resetPosition(pose, m_imu.getRotation2d());
+        // m_odometry.resetPosition(pose, m_imu.getRotation2d());
     }
 
     public DifferentialDriveWheelSpeeds getWheelSpeeds() {

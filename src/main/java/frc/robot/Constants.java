@@ -60,7 +60,7 @@ public final class Constants {
         public static final double kBackwardSpeed = -0.3; 
         public static final double kForwardSeconds = 2;
         public static final double kBackwardSeconds = 3;
-        public static final double kArmDownSeconds = 3; // TODO: Determine if too long or too short
+        public static final double kArmDownSeconds = 2; // TODO: Determine if too long or too short
         public static final double kArmUpViolentSeconds = 0.75; // TODO: Determine if too long or too short
         public static final double kOuttakeSeconds = 1;
     }
@@ -68,17 +68,19 @@ public final class Constants {
     public static final class Arm {
         public static final int kArmMotor = 10;
         public static final double kArmMaxSpeed = 0.3; // ADJUST THIS
-        public static final double kArmBottomPositionEncoderReading = -1; // ADJUST THIS
+        public static final double kArmBottomPositionEncoderReading = 0.16; // ADJUST THIS
         public static final double kArmTopPositionEncoderReading = 16; // ADJUST THIS
         public static final int kArmEncoder = 0; // ADJUST THIS
         public static final double kArmEncoderDistance = 0; // ADJUST THIS
-        public static final PIDController kArmPIDUp = new PIDController(0.05, 0.02, 0.00); // ADJUST THESE
-        public static final PIDController kArmPIDDown = new PIDController(0.03, 0.009, 0.00); // ADJUST THESE
+        public static final PIDController kArmPIDUp = new PIDController(0.08, 0.01, 0.00); // ADJUST THESE
+        public static final PIDController kArmPIDDown = new PIDController(0.035, 0.003, 0.00); // ADJUST THESE
         public static final double kArmUp = 0.3; // ADJUST THIS
-        public static final double kArmDown = -0.3; // ADJUST THIS
-        public static final double kArmHold = 0; // ADJUST THIS
+        public static final double kArmDown = -0.2; // ADJUST THIS
+        public static final double kArmHold = -0.1; // ADJUST THIS
         public static final double kArmUpViolent = 0.4; 
-        public static final int kArmCurrentLimit = 60;
+        public static final int kArmCurrentLimit = 40;
+        public static final int forwardSoftLimit = 200;
+        public static final int reverseSoftLimit = 0;
     }
 
     public static final class Intake {
@@ -92,6 +94,11 @@ public final class Constants {
         public static final int kLeftClimb = 11;
         public static final int kRightClimb = 12;
 
+        public static final double kMaxSpeed = 0.2;
+        public static final double kSlowSpeed = 0.1;
+        public static final double kdownIndvSpd = .5;
+
+        public static final double kHoldingSpeed = -0.1;
     }
 
     public static final class OI {
@@ -108,6 +115,9 @@ public final class Constants {
 
         public static final int kArmOverrideButton = 4;
         public static final int kArmOverrideDisableButton = 3;
+
+        public static final int kClimberLeftDownSlow = 7;
+        public static final int kClimberRightDownSlow = 8;
 
         //public static final int kTankDriveButton = 100;
         //public static final int kArcadeDriveButton = 6;
